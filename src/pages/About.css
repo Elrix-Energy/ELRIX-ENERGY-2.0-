@@ -1,0 +1,85 @@
+.md-message-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.md-photo-container {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+}
+
+.md-photo-container::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border: 8px solid rgba(255,255,255,0.2);
+  z-index: 1;
+  border-radius: var(--radius-xl);
+}
+
+.md-photo {
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  object-position: top center; /* Prevents the head from being cropped off */
+  display: block;
+}
+
+.md-message-content {
+  position: relative;
+}
+
+.quote-mark {
+  font-family: var(--font-heading);
+  font-size: 6rem;
+  line-height: 1;
+  color: var(--primary-light);
+  position: absolute;
+  top: -2rem;
+  left: -2rem;
+  z-index: -1;
+  opacity: 0.5;
+}
+
+.md-message-content p {
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  color: var(--text-dark);
+}
+
+.md-message-content .lead {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--primary-dark);
+}
+
+.signature {
+  margin-top: 2rem;
+  font-size: 1.2rem;
+  color: var(--secondary-dark);
+}
+
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.cert-card {
+  background: var(--white);
+  padding: 2rem;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  border-bottom: 4px solid var(--primary);
+}
+
+@media (max-width: 768px) {
+  .md-message-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
