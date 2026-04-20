@@ -69,6 +69,12 @@
   z-index: 2;
 }
 
+.highlighted-slab .slab-capacity,
+.highlighted-slab .slab-amount,
+.highlighted-slab .slab-desc {
+  color: var(--white);
+}
+
 .highlighted-slab:hover {
   transform: scale(1.05) translateY(-5px);
 }
