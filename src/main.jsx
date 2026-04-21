@@ -4,13 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App.jsx'
 import './index.css'
 
-const rootElement = document.getElementById('root')
-
-if (window.location.pathname !== '/') {
-  rootElement.innerHTML = ''
-}
-
-ReactDOM.createRoot(rootElement).render(
+ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
       <App />

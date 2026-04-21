@@ -138,7 +138,7 @@ const Home = () => {
   return (
     <div className="home">
       {/* Hero Section */}
-      <header className="hero">
+      <section className="hero">
         <div className="container hero-content">
           <Reveal delay={0}>
             <h1>
@@ -160,39 +160,39 @@ const Home = () => {
           </Reveal>
         </div>
         <div className="hero-overlay"></div>
-      </header>
+      </section>
 
       {/* Value Props */}
       <section className="section bg-white relative-z">
         <div className="container">
           <div className="value-props">
             <Reveal delay={0}>
-              <article className="prop-card">
+              <div className="prop-card">
                 <Sun size={40} className="prop-icon" />
                 <h3>Tier-1 ALMM Tech</h3>
                 <p>Maximum power, zero compromise. We exclusively install Tier-1 components guaranteeing decadal efficiency.</p>
-              </article>
+              </div>
             </Reveal>
             <Reveal delay={150}>
-              <article className="prop-card">
+              <div className="prop-card">
                 <IndianRupee size={40} className="prop-icon" />
                 <h3>Free Roof Blueprint</h3>
                 <p>Stop guessing. We provide a 100% free, mathematically precise roof analysis across our four service districts.</p>
-              </article>
+              </div>
             </Reveal>
             <Reveal delay={300}>
-              <article className="prop-card">
+              <div className="prop-card">
                 <ShieldCheck size={40} className="prop-icon" />
                 <h3>Instant Gov Subsidy</h3>
                 <p>We aggressively handle all portal paperwork to secure your massive PM Surya Ghar subsidy and effortless EMI.</p>
-              </article>
+              </div>
             </Reveal>
             <Reveal delay={450}>
-              <article className="prop-card">
+              <div className="prop-card">
                 <Wrench size={40} className="prop-icon" />
                 <h3>Cyclone Proofing</h3>
                 <p>Built to survive. Our heavy-duty HDGI mounting structures easily withstand 180 km/h coastal wind speeds.</p>
-              </article>
+              </div>
             </Reveal>
           </div>
         </div>
@@ -225,11 +225,11 @@ const Home = () => {
           <div className="services-grid">
             {serviceCards.map((service, index) => (
               <Reveal delay={index * 150} key={service.title}>
-                <article className="service-card glass">
+                <div className="service-card glass">
                   <h3>{service.title}</h3>
                   <p>{service.description}</p>
                   <Link to={service.link} className="text-secondary font-bold">Learn More &rarr;</Link>
-                </article>
+                </div>
               </Reveal>
             ))}
           </div>
@@ -298,7 +298,7 @@ const Home = () => {
           <div className="testimonials-grid">
             {testimonials.map((testimonial, index) => (
               <Reveal delay={index * 150} key={testimonial.author}>
-                <article className="testimonial-card">
+                <div className="testimonial-card">
                   <div className="testimonial-stars">
                     {Array.from({ length: 5 }, (_, starIndex) => (
                       <Star key={starIndex} size={20} fill="currentColor" stroke="none" />
@@ -309,7 +309,7 @@ const Home = () => {
                     <h4>{testimonial.author}</h4>
                     <p>{testimonial.role}</p>
                   </div>
-                </article>
+                </div>
               </Reveal>
             ))}
           </div>
@@ -371,12 +371,12 @@ const Home = () => {
           <div className="blogs-preview-grid">
             {blogPreviews.map((post, index) => (
               <Reveal delay={index * 150} key={post.title}>
-                <article className="blog-card bg-white">
+                <div className="blog-card bg-white">
                   <p className="blog-date">{post.date}</p>
                   <h3>{post.title}</h3>
                   <p>{post.description}</p>
                   <Link to="/blog" className="text-primary font-bold mt-1 inline-block">Read More &rarr;</Link>
-                </article>
+                </div>
               </Reveal>
             ))}
           </div>
