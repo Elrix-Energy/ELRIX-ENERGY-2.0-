@@ -1,15 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FileText, Settings, Wallet, ArrowRight, AlertCircle } from 'lucide-react';
+import { FileText, Settings, Wallet, ArrowRight } from 'lucide-react';
 import './Subsidy.css';
 
 const Subsidy = () => {
   return (
     <div className="subsidy-page">
       {/* Graphical Hero */}
-      <section className="subsidy-hero bg-primary">
-        <div className="container text-center">
-          <h1 className="text-white mb-2" style={{fontFamily: 'var(--font-heading)'}}>PM Surya Ghar: Muft Bijli Yojana</h1>
+      <section className="page-header subsidy-hero">
+        <div className="container">
+          <h1>PM Surya Ghar: Muft Bijli Yojana</h1>
           <p className="subsidy-subtitle">Direct Government Subsidy up to <strong>₹78,000</strong> in Andhra Pradesh</p>
         </div>
       </section>
@@ -51,10 +51,9 @@ const Subsidy = () => {
                 <h2 className="mb-2">How <span className="text-secondary">ELRIX ENERGY</span> Helps</h2>
                 <p className="mb-2" style={{fontSize: '1.1rem', color: 'var(--text-light)'}}>We manage the <strong>entire</strong> bureaucratic process so you do not have to lift a finger. From the initial application to the money arriving in your bank, we handle it all.</p>
                 <div className="urgency-alert mt-2">
-                  <AlertCircle size={32} className="text-danger mr-1" style={{flexShrink: 0}} />
                   <div>
-                    <strong style={{color: '#991b1b'}}>Urgent Allocation Notice:</strong><br/>
-                    Funds are distributed on a first-come, first-serve basis. Do not miss out on securing your home's allocation before the regional limits are reached!
+                    <strong className="urgency-title">APPLY NOW</strong><br/>
+                    Do not miss this opportunity. Subsidy allocations are available only while funds last, so applying early gives you a better chance of securing your benefit.
                   </div>
                 </div>
               </div>

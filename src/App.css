@@ -30,17 +30,31 @@
 .page-header {
   background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
   color: white;
-  padding: 4rem 0;
+  padding: 2.25rem 0;
   text-align: center;
 }
 
 .page-header h1 {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .page-header p {
-  font-size: 1.125rem;
+  font-size: 1rem;
   opacity: 0.9;
   max-width: 600px;
   margin: 0 auto;
+}
+
+.page-header + .section {
+  padding-top: 2.25rem;
+}
+
+@media (max-width: 768px) {
+  .page-header {
+    padding: 1.9rem 0;
+  }
+
+  .page-header + .section {
+    padding-top: 1.9rem;
+  }
 }

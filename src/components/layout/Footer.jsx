@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { Facebook, Instagram, MapPin, Phone, Mail, ArrowRight } from 'lucide-react';
 import './Footer.css';
 
+const mapsUrl = 'https://www.google.com/maps/search/?api=1&query=Elrix+Energy+Solar+Solutions+Nellore';
+
 const Footer = () => {
   return (
     <footer className="footer">
@@ -19,7 +21,7 @@ const Footer = () => {
             <div className="social-links">
               <a href="https://www.facebook.com/profile.php?id=61588416327126" target="_blank" rel="noopener noreferrer"><Facebook /></a>
               <a href="https://www.instagram.com/elrix_energy/" target="_blank" rel="noopener noreferrer"><Instagram /></a>
-              <a href="https://www.google.com/maps/search/?api=1&query=Elrix+Energy+Solar+Solutions+Nellore" target="_blank" rel="noopener noreferrer"><MapPin /></a>
+              <a href={mapsUrl} target="_blank" rel="noopener noreferrer"><MapPin /></a>
             </div>
           </div>
           
@@ -38,9 +40,9 @@ const Footer = () => {
           <div className="footer-col links-col">
             <h3>Services</h3>
             <ul>
-              <li><Link to="/services/residential"><ArrowRight size={16}/> Residential Solar</Link></li>
-              <li><Link to="/services/commercial"><ArrowRight size={16}/> Commercial Solar</Link></li>
-              <li><Link to="/services/industrial"><ArrowRight size={16}/> Industrial Solar</Link></li>
+              <li><Link to="/services#residential"><ArrowRight size={16}/> Residential Solar</Link></li>
+              <li><Link to="/services#commercial"><ArrowRight size={16}/> Commercial Solar</Link></li>
+              <li><Link to="/services#industrial"><ArrowRight size={16}/> Industrial Solar</Link></li>
               <li><Link to="/subsidy"><ArrowRight size={16}/> PM Surya Ghar Subsidy</Link></li>
               <li><Link to="/financing"><ArrowRight size={16}/> EMI & Financing</Link></li>
             </ul>

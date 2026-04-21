@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { MapPin, Phone, Mail, ExternalLink } from 'lucide-react';
 import './Contact.css';
 
+const contactMapsUrl = 'https://www.google.com/maps/search/?api=1&query=Elrix+Energy+Solar+Solutions+Nellore';
+const contactFormEndpoint = 'https://formsubmit.co/ajax/elrixenergy@gmail.com';
+
 const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
@@ -15,7 +18,7 @@ const Contact = () => {
     const formData = new FormData(form);
 
     try {
-      const response = await fetch('https://formsubmit.co/ajax/elrixenergy@gmail.com', {
+      const response = await fetch(contactFormEndpoint, {
         method: 'POST',
         headers: {
           Accept: 'application/json'
@@ -29,7 +32,7 @@ const Contact = () => {
 
       setSubmitStatus('success');
       form.reset();
-    } catch (error) {
+    } catch {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
@@ -135,7 +138,7 @@ const Contact = () => {
       <section className="map-section">
         <a
           className="map-open-button"
-          href="https://www.google.com/maps/search/?api=1&query=Elrix+Energy+Solar+Solutions+Nellore"
+          href={contactMapsUrl}
           target="_blank"
           rel="noreferrer"
           aria-label="Open ELRIX Energy location in Google Maps"

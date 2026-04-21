@@ -1,8 +1,108 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Sun, ShieldCheck, Wrench, IndianRupee, MapPin, ArrowRight, Calculator, Star, ChevronDown, ChevronUp } from 'lucide-react';
+import { Sun, ShieldCheck, Wrench, IndianRupee, ArrowRight, Calculator, Star, ChevronDown, ChevronUp } from 'lucide-react';
 import Reveal from '../components/common/Reveal';
 import './Home.css';
+
+const brandPlaceholders = [
+  'COMING SOON',
+  'PARTNER WITH US',
+  'COMING SOON',
+  'YOUR BRAND HERE',
+  'COMING SOON'
+];
+
+const serviceCards = [
+  {
+    title: 'Residential Solar',
+    description: 'Power your home with clean energy. Slash your bills and increase property value.',
+    link: '/services/residential'
+  },
+  {
+    title: 'Commercial Solar',
+    description: 'Turn your roof into an asset. Maximize ROI with accelerated depreciation.',
+    link: '/services/commercial'
+  },
+  {
+    title: 'Industrial Solar',
+    description: 'Large scale MW plants to handle heavy operational loads and compliance.',
+    link: '/services/industrial'
+  }
+];
+
+const testimonials = [
+  {
+    quote: '"We are committed to delivering the highest quality solar solutions across Andhra Pradesh. Your upcoming 5-star review will be featured right here."',
+    author: 'Future Client',
+    role: 'Commercial Partner'
+  },
+  {
+    quote: '"Let us handle your entire solar transition and PM Surya Ghar subsidy flawlessly. Form a partnership with ELRIX and share your success story with us."',
+    author: 'Future Customer',
+    role: 'Residential Homeowner'
+  },
+  {
+    quote: '"Heavy-duty engineering means absolute peace of mind for decades. We look forward to powering your facility and showcasing your industrial upgrade here."',
+    author: 'Future Partner',
+    role: 'Industrial Facility'
+  }
+];
+
+const faqItems = [
+  {
+    q: 'Does solar work in the rainy season?',
+    a: <>Yes! While peak efficiency occurs on clear days, solar panels still generate electricity during the monsoon. Thanks to Net Metering, the massive excess power you generate during the summer essentially "banks" credits to offset lower generation during cloudy months.</>
+  },
+  {
+    q: 'Will my electricity bill be absolutely zero?',
+    a: <>Practically, yes. All of your actual energy usage charges can be completely offset to zero. However, you will still receive a very minimal monthly bill from your DISCOM specifically to cover basic fixed grid-connection charges.</>
+  },
+  {
+    q: 'Do you handle solar loan processing and financing?',
+    a: <>Absolutely. We have direct partnerships with leading banks to provide seamless EMI support. Our team at <strong>ELRIX ENERGY</strong> guides you through the entire documentation process, making the financial transition to solar effortless.</>
+  },
+  {
+    q: 'Is ELRIX ENERGY an officially empanelled vendor?',
+    a: <>Yes. <strong>ELRIX ENERGY</strong> is an officially registered and empanelled vendor. This guarantees that all our installations meet strict government standards and ensures you are fully eligible for the PM Surya Ghar subsidy scheme.</>
+  },
+  {
+    q: 'What is the difference between DCR and Non-DCR panels?',
+    a: <>DCR (Domestic Content Requirement) panels are manufactured entirely in India out of Indian cells, which is a strictly mandatory requirement to claim residential government subsidies. Non-DCR panels often utilize imported components and are used aggressively in commercial projects where subsidies do not apply.</>
+  },
+  {
+    q: 'What is the expected Return on Investment (ROI)?',
+    a: <>Solar is one of the highest-yield low-risk investments available today. Residential setups typically see a full ROI within <strong>36 to 60 months</strong>. Commercial and industrial installations often achieve ROI in just <strong>24 to 48 months</strong> largely due to accelerated depreciation tax benefits.</>
+  },
+  {
+    q: 'Can commercial business owners get the government subsidy?',
+    a: <>No, centralized government subsidies like PM Surya Ghar are exclusively for residential homeowners. Commercial clients, however, benefit heavily from aggressive tax exemptions under Section 32 of the Income Tax Act (Accelerated Depreciation).</>
+  },
+  {
+    q: 'What is Net Metering and how does it work?',
+    a: <>Net metering is a grid-connected billing mechanism. If your panels produce more power than your property uses during the day, the excess electricity is exported back to the DISCOM, and you are financially credited for it on your next billing cycle!</>
+  },
+  {
+    q: 'How much maintenance do solar panels actually require?',
+    a: <>Very minimal! Because Tier-1 solar panels have absolutely no moving parts, the only regular residential maintenance required is occasionally washing the surface with clean water to remove accumulated dust. <strong>ELRIX</strong> also offers dedicated automated maintenance packages for commercial sites.</>
+  },
+  {
+    q: 'Do on-grid solar systems work during a grid power outage?',
+    a: <>Standard grid-tied (On-Grid) systems without batteries will automatically shut down during a blackout. This is a mandatory safety mechanism to protect DISCOM linesmen repairing the grid. If you require backup power during outages, <strong>ELRIX</strong> offers Hybrid systems directly integrated with battery storage.</>
+  }
+];
+
+const blogPreviews = [
+  {
+    date: 'Oct 20, 2023',
+    title: 'Top 5 Reasons to go Solar in Nellore',
+    description: 'With 300 sunny days, Nellore is the perfect city to slash your electricity bills using Solar power and PM Surya Ghar subsidy.'
+  },
+  {
+    date: 'Dec 15, 2023',
+    title: 'Is Solar a Good Investment for Small Industries?',
+    description: 'Accelerated depreciation and lower operational costs make solar a must-have for MSMEs.'
+  }
+];
 
 const Home = () => {
   const [bill, setBill] = useState('');
@@ -43,7 +143,7 @@ const Home = () => {
           <Reveal delay={0}>
             <h1>
               <span className="hero-word-dark">Eliminate</span>{' '}
-              <span className="hero-word-light hero-strike">Your Power Bill.</span>
+              <span className="hero-word-light">Your Power Bill.</span>
               <br />
               <span className="hero-word-light">Demand</span>{' '}
               <span className="hero-word-dark">Premium Solar.</span>
@@ -103,19 +203,15 @@ const Home = () => {
         <h3>Trusted By Quality-Driven Businesses in Andhra Pradesh</h3>
         <div className="logo-marquee-container">
           <div className="logo-track">
-            <div className="client-logo-box">COMING SOON</div>
-            <div className="client-logo-box">PARTNER WITH US</div>
-            <div className="client-logo-box">COMING SOON</div>
-            <div className="client-logo-box">YOUR BRAND HERE</div>
-            <div className="client-logo-box">COMING SOON</div>
+            {brandPlaceholders.map((label, index) => (
+              <div className="client-logo-box" key={`brand-primary-${index}`}>{label}</div>
+            ))}
           </div>
           {/* Exactly duplicated track for seamless infinite scroll */}
           <div className="logo-track" aria-hidden="true">
-            <div className="client-logo-box">COMING SOON</div>
-            <div className="client-logo-box">PARTNER WITH US</div>
-            <div className="client-logo-box">COMING SOON</div>
-            <div className="client-logo-box">YOUR BRAND HERE</div>
-            <div className="client-logo-box">COMING SOON</div>
+            {brandPlaceholders.map((label, index) => (
+              <div className="client-logo-box" key={`brand-duplicate-${index}`}>{label}</div>
+            ))}
           </div>
         </div>
       </section>
@@ -127,27 +223,15 @@ const Home = () => {
             <h2 className="text-center mb-3">Our Core Services</h2>
           </Reveal>
           <div className="services-grid">
-            <Reveal delay={0}>
-              <div className="service-card glass">
-                <h3>Residential Solar</h3>
-                <p>Power your home with clean energy. Slash your bills and increase property value.</p>
-                <Link to="/services/residential" className="text-secondary font-bold">Learn More &rarr;</Link>
-              </div>
-            </Reveal>
-            <Reveal delay={150}>
-              <div className="service-card glass">
-                <h3>Commercial Solar</h3>
-                <p>Turn your roof into an asset. Maximize ROI with accelerated depreciation.</p>
-                <Link to="/services/commercial" className="text-secondary font-bold">Learn More &rarr;</Link>
-              </div>
-            </Reveal>
-            <Reveal delay={300}>
-              <div className="service-card glass">
-                <h3>Industrial Solar</h3>
-                <p>Large scale MW plants to handle heavy operational loads and compliance.</p>
-                <Link to="/services/industrial" className="text-secondary font-bold">Learn More &rarr;</Link>
-              </div>
-            </Reveal>
+            {serviceCards.map((service, index) => (
+              <Reveal delay={index * 150} key={service.title}>
+                <div className="service-card glass">
+                  <h3>{service.title}</h3>
+                  <p>{service.description}</p>
+                  <Link to={service.link} className="text-secondary font-bold">Learn More &rarr;</Link>
+                </div>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
@@ -212,56 +296,22 @@ const Home = () => {
           </Reveal>
 
           <div className="testimonials-grid">
-            <Reveal delay={0}>
-              <div className="testimonial-card">
-                <div className="testimonial-stars">
-                  <Star size={20} fill="currentColor" stroke="none" />
-                  <Star size={20} fill="currentColor" stroke="none" />
-                  <Star size={20} fill="currentColor" stroke="none" />
-                  <Star size={20} fill="currentColor" stroke="none" />
-                  <Star size={20} fill="currentColor" stroke="none" />
+            {testimonials.map((testimonial, index) => (
+              <Reveal delay={index * 150} key={testimonial.author}>
+                <div className="testimonial-card">
+                  <div className="testimonial-stars">
+                    {Array.from({ length: 5 }, (_, starIndex) => (
+                      <Star key={starIndex} size={20} fill="currentColor" stroke="none" />
+                    ))}
+                  </div>
+                  <p className="testimonial-quote">{testimonial.quote}</p>
+                  <div className="testimonial-author">
+                    <h4>{testimonial.author}</h4>
+                    <p>{testimonial.role}</p>
+                  </div>
                 </div>
-                <p className="testimonial-quote">"We are committed to delivering the highest quality solar solutions across Andhra Pradesh. Your upcoming 5-star review will be featured right here."</p>
-                <div className="testimonial-author">
-                  <h4>Future Client</h4>
-                  <p>Commercial Partner</p>
-                </div>
-              </div>
-            </Reveal>
-
-            <Reveal delay={150}>
-              <div className="testimonial-card">
-                <div className="testimonial-stars">
-                  <Star size={20} fill="currentColor" stroke="none" />
-                  <Star size={20} fill="currentColor" stroke="none" />
-                  <Star size={20} fill="currentColor" stroke="none" />
-                  <Star size={20} fill="currentColor" stroke="none" />
-                  <Star size={20} fill="currentColor" stroke="none" />
-                </div>
-                <p className="testimonial-quote">"Let us handle your entire solar transition and PM Surya Ghar subsidy flawlessly. Form a partnership with ELRIX and share your success story with us."</p>
-                <div className="testimonial-author">
-                  <h4>Future Customer</h4>
-                  <p>Residential Homeowner</p>
-                </div>
-              </div>
-            </Reveal>
-
-            <Reveal delay={300}>
-              <div className="testimonial-card">
-                <div className="testimonial-stars">
-                  <Star size={20} fill="currentColor" stroke="none" />
-                  <Star size={20} fill="currentColor" stroke="none" />
-                  <Star size={20} fill="currentColor" stroke="none" />
-                  <Star size={20} fill="currentColor" stroke="none" />
-                  <Star size={20} fill="currentColor" stroke="none" />
-                </div>
-                <p className="testimonial-quote">"Heavy-duty engineering means absolute peace of mind for decades. We look forward to powering your facility and showcasing your industrial upgrade here."</p>
-                <div className="testimonial-author">
-                  <h4>Future Partner</h4>
-                  <p>Industrial Facility</p>
-                </div>
-              </div>
-            </Reveal>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
@@ -274,48 +324,7 @@ const Home = () => {
               <h2 style={{ margin: 0 }}>Frequently Asked Questions</h2>
             </div>
             <div className="faq-container" style={{ maxWidth: '800px', margin: '0 auto' }}>
-            {[
-              {
-                q: "Does solar work in the rainy season?",
-                a: <>Yes! While peak efficiency occurs on clear days, solar panels still generate electricity during the monsoon. Thanks to Net Metering, the massive excess power you generate during the summer essentially "banks" credits to offset lower generation during cloudy months.</>
-              },
-              {
-                q: "Will my electricity bill be absolutely zero?",
-                a: <>Practically, yes. All of your actual energy usage charges can be completely offset to zero. However, you will still receive a very minimal monthly bill from your DISCOM specifically to cover basic fixed grid-connection charges.</>
-              },
-              {
-                q: "Do you handle solar loan processing and financing?",
-                a: <>Absolutely. We have direct partnerships with leading banks to provide seamless EMI support. Our team at <strong>ELRIX ENERGY</strong> guides you through the entire documentation process, making the financial transition to solar effortless.</>
-              },
-              {
-                q: "Is ELRIX ENERGY an officially empanelled vendor?",
-                a: <>Yes. <strong>ELRIX ENERGY</strong> is an officially registered and empanelled vendor. This guarantees that all our installations meet strict government standards and ensures you are fully eligible for the PM Surya Ghar subsidy scheme.</>
-              },
-              {
-                q: "What is the difference between DCR and Non-DCR panels?",
-                a: <>DCR (Domestic Content Requirement) panels are manufactured entirely in India out of Indian cells, which is a strictly mandatory requirement to claim residential government subsidies. Non-DCR panels often utilize imported components and are used aggressively in commercial projects where subsidies do not apply.</>
-              },
-              {
-                q: "What is the expected Return on Investment (ROI)?",
-                a: <>Solar is one of the highest-yield low-risk investments available today. Residential setups typically see a full ROI within <strong>36 to 60 months</strong>. Commercial and industrial installations often achieve ROI in just <strong>24 to 48 months</strong> largely due to accelerated depreciation tax benefits.</>
-              },
-              {
-                q: "Can commercial business owners get the government subsidy?",
-                a: <>No, centralized government subsidies like PM Surya Ghar are exclusively for residential homeowners. Commercial clients, however, benefit heavily from aggressive tax exemptions under Section 32 of the Income Tax Act (Accelerated Depreciation).</>
-              },
-              {
-                q: "What is Net Metering and how does it work?",
-                a: <>Net metering is a grid-connected billing mechanism. If your panels produce more power than your property uses during the day, the excess electricity is exported back to the DISCOM, and you are financially credited for it on your next billing cycle!</>
-              },
-              {
-                q: "How much maintenance do solar panels actually require?",
-                a: <>Very minimal! Because Tier-1 solar panels have absolutely no moving parts, the only regular residential maintenance required is occasionally washing the surface with clean water to remove accumulated dust. <strong>ELRIX</strong> also offers dedicated automated maintenance packages for commercial sites.</>
-              },
-              {
-                q: "Do on-grid solar systems work during a grid power outage?",
-                a: <>Standard grid-tied (On-Grid) systems without batteries will automatically shut down during a blackout. This is a mandatory safety mechanism to protect DISCOM linesmen repairing the grid. If you require backup power during outages, <strong>ELRIX</strong> offers Hybrid systems directly integrated with battery storage.</>
-              }
-            ].slice(0, showAllFaqs ? 10 : 5).map((faq, index) => (
+            {faqItems.slice(0, showAllFaqs ? faqItems.length : 5).map((faq, index) => (
               <div
                 key={index}
                 className={`faq-item ${openFaq === index ? 'active' : ''}`}
@@ -360,22 +369,16 @@ const Home = () => {
             <Link to="/blog" className="btn btn-outline" style={{ padding: '0.5rem 1rem' }}>View All Blogs</Link>
           </div>
           <div className="blogs-preview-grid">
-            <Reveal delay={0}>
-              <div className="blog-card bg-white">
-                <p className="blog-date">Oct 20, 2023</p>
-                <h3>Top 5 Reasons to go Solar in Nellore</h3>
-                <p>With 300 sunny days, Nellore is the perfect city to slash your electricity bills using Solar power and PM Surya Ghar subsidy.</p>
-                <Link to="/blog" className="text-primary font-bold mt-1 inline-block">Read More &rarr;</Link>
-              </div>
-            </Reveal>
-            <Reveal delay={150}>
-              <div className="blog-card bg-white">
-                <p className="blog-date">Dec 15, 2023</p>
-                <h3>Is Solar a Good Investment for Small Industries?</h3>
-                <p>Accelerated depreciation and lower operational costs make solar a must-have for MSMEs.</p>
-                <Link to="/blog" className="text-primary font-bold mt-1 inline-block">Read More &rarr;</Link>
-              </div>
-            </Reveal>
+            {blogPreviews.map((post, index) => (
+              <Reveal delay={index * 150} key={post.title}>
+                <div className="blog-card bg-white">
+                  <p className="blog-date">{post.date}</p>
+                  <h3>{post.title}</h3>
+                  <p>{post.description}</p>
+                  <Link to="/blog" className="text-primary font-bold mt-1 inline-block">Read More &rarr;</Link>
+                </div>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>

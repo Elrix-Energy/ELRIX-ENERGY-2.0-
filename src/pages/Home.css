@@ -2,9 +2,11 @@
   height: 90vh;
   min-height: 600px;
   background: url('https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&q=80') 58% center/cover;
+  animation: heroBackgroundDrift 18s ease-in-out infinite alternate;
   position: relative;
   display: flex;
   align-items: center;
+  overflow: hidden;
 }
 
 .hero-overlay {
@@ -34,11 +36,6 @@
   color: #000000;
 }
 
-.hero-strike {
-  position: relative;
-  display: inline-block;
-}
-
 .hero-content p {
   font-size: 1.25rem;
   margin-bottom: 2rem;
@@ -49,6 +46,16 @@
 .hero-cta-group {
   display: flex;
   gap: 1rem;
+}
+
+@keyframes heroBackgroundDrift {
+  0% {
+    background-position: 50% center;
+  }
+
+  100% {
+    background-position: 68% center;
+  }
 }
 
 .relative-z {
@@ -249,6 +256,12 @@
   .calc-form { flex-direction: column; align-items: stretch; }
   .calc-result { grid-template-columns: 1fr; gap: 1.5rem; }
   .calculator-wrapper { padding: 2rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero {
+    animation: none;
+  }
 }
 
 /* --- Trust Metrics CSS --- */
