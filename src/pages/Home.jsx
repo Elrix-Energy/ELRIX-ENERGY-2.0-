@@ -41,7 +41,13 @@ const Home = () => {
       <section className="hero">
         <div className="container hero-content">
           <Reveal delay={0}>
-            <h1>Eliminate Your Power Bill. <br /><span className="text-primary">Demand Premium Solar.</span></h1>
+            <h1>
+              <span className="hero-word-dark">Eliminate</span>{' '}
+              <span className="hero-word-light hero-strike">Your Power Bill.</span>
+              <br />
+              <span className="hero-word-light">Demand</span>{' '}
+              <span className="hero-word-dark">Premium Solar.</span>
+            </h1>
           </Reveal>
           <Reveal delay={150}>
             <p>South India's most trusted solar EPC. We engineer permanent, cyclone-proof solar solutions for residential and commercial roofs in Nellore, Tirupati, Kadapa, and Ongole—with full PM Surya Ghar subsidy integration.</p>

@@ -1,8 +1,41 @@
-import React from 'react';
-import { MapPin, Phone, Mail } from 'lucide-react';
+import React, { useState } from 'react';
+import { MapPin, Phone, Mail, ExternalLink } from 'lucide-react';
 import './Contact.css';
 
 const Contact = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch('https://formsubmit.co/ajax/elrixenergy@gmail.com', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json'
+        },
+        body: formData
+      });
+
+      if (!response.ok) {
+        throw new Error('Form submission failed');
+      }
+
+      setSubmitStatus('success');
+      form.reset();
+    } catch (error) {
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="contact-page">
       <header className="page-header">
@@ -45,9 +78,10 @@ const Contact = () => {
             </div>
 
             <div className="contact-form-container glass">
-              <form action="https://formsubmit.co/elrixenergy@gmail.com" method="POST" className="contact-form">
+              <form onSubmit={handleSubmit} className="contact-form">
                 <input type="hidden" name="_subject" value="New lead from ELRIX ENERGY Website!" />
                 <input type="hidden" name="_captcha" value="false" />
+                <input type="hidden" name="_template" value="table" />
                 
                 <div className="form-group">
                   <label htmlFor="name">Full Name</label>
@@ -76,7 +110,21 @@ const Contact = () => {
                   <textarea id="requirement" name="requirement" rows="4" required placeholder="Describe your energy needs..."></textarea>
                 </div>
 
-                <button type="submit" className="btn btn-primary w-100">Send Inquiry</button>
+                <button type="submit" className="btn btn-primary w-100" disabled={isSubmitting}>
+                  {isSubmitting ? 'Sending...' : 'Send Inquiry'}
+                </button>
+
+                {submitStatus === 'success' && (
+                  <p className="form-message form-message-success">
+                    Thank you. Your inquiry has been sent successfully. Our team will get back to you soon.
+                  </p>
+                )}
+
+                {submitStatus === 'error' && (
+                  <p className="form-message form-message-error">
+                    Something went wrong while sending your inquiry. Please try again or call us directly.
+                  </p>
+                )}
               </form>
             </div>
           </div>
@@ -85,6 +133,16 @@ const Contact = () => {
 
       {/* Map Section */}
       <section className="map-section">
+        <a
+          className="map-open-button"
+          href="https://www.google.com/maps/search/?api=1&query=Elrix+Energy+Solar+Solutions+Nellore"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Open ELRIX Energy location in Google Maps"
+        >
+          <span>Open in Maps</span>
+          <ExternalLink size={16} />
+        </a>
         <iframe 
           title="ELRIX Energy Location"
           src="https://maps.google.com/maps?q=Elrix%20Energy%20Solar%20Solutions%20Nellore&t=&z=15&ie=UTF8&iwloc=&output=embed"

@@ -19,7 +19,7 @@ const Footer = () => {
             <div className="social-links">
               <a href="https://www.facebook.com/profile.php?id=61588416327126" target="_blank" rel="noopener noreferrer"><Facebook /></a>
               <a href="https://www.instagram.com/elrix_energy/" target="_blank" rel="noopener noreferrer"><Instagram /></a>
-              <a href="https://share.google/6HO0CKPaNiAYbMPwF" target="_blank" rel="noopener noreferrer"><MapPin /></a>
+              <a href="https://www.google.com/maps/search/?api=1&query=Elrix+Energy+Solar+Solutions+Nellore" target="_blank" rel="noopener noreferrer"><MapPin /></a>
             </div>
           </div>
           

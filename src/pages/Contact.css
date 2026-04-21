@@ -76,8 +76,58 @@
   width: 100%;
 }
 
+.contact-form .btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.form-message {
+  margin-top: 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.form-message-success {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.form-message-error {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
 .map-section iframe {
   display: block;
+}
+
+.map-section {
+  position: relative;
+}
+
+.map-open-button {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 2;
+  display: none;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: 0.35rem;
+  background: var(--white);
+  color: #1967d2;
+  font-size: 0.95rem;
+  font-weight: 500;
+  box-shadow: var(--shadow-md);
+}
+
+.map-open-button:hover {
+  color: #174ea6;
 }
 
 @media (max-width: 768px) {
@@ -87,5 +137,9 @@
   }
   .contact-form-container {
     padding: 2rem;
+  }
+
+  .map-open-button {
+    display: inline-flex;
   }
 }
