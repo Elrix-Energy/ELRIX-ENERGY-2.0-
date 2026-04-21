@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Phone } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -24,6 +24,13 @@ const Navbar = () => {
   useEffect(() => {
     setIsOpen(false);
   }, [location]);
+
+  const handleQuoteClick = (event) => {
+    if (location.pathname === '/contact') {
+      event.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   return (
     <header className={`navbar ${scrolled ? 'scrolled glass' : ''}`}>
@@ -49,7 +56,7 @@ const Navbar = () => {
           <Link to="/about" className={location.pathname === '/about' ? 'active-link' : ''}>About</Link>
           <Link to="/contact" className={location.pathname === '/contact' ? 'active-link' : ''}>Contact</Link>
           
-          <Link to="/contact" className="btn btn-secondary nav-cta">
+          <Link to="/contact" className="btn btn-secondary nav-cta" onClick={handleQuoteClick}>
              Get Quote
           </Link>
         </nav>
