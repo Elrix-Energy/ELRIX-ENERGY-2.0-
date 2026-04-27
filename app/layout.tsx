@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Outfit, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/layout/Navbar";
@@ -86,6 +87,19 @@ export default function RootLayout({
         />
       </head>
       <body className={`${outfit.variable} ${inter.variable}`}>
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-0M16EF2N02"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-0M16EF2N02');
+          `}
+        </Script>
         <div className="app-wrapper">
           <ScrollManager />
           <Navbar />
