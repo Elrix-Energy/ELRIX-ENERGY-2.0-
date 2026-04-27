@@ -41,6 +41,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "ELRIX ENERGY | Premium Solar Solutions",
+    description: "South India's most trusted solar EPC. Eliminate your power bill with cyclone-proof solar installations.",
+  },
   verification: {
     google: "KJt0OtAfT_EBq7M5sH0fYKwaF7j4tp5H8cbm4802e5M",
   },
@@ -97,4 +99,3 @@ export default function RootLayout({
     </html>
   );
 }
-
