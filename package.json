@@ -2,21 +2,25 @@
   "name": "elrix-energy-website",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "next start"
   },
   "dependencies": {
+    "next": "^15.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.26.2",
     "lucide-react": "^0.436.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.3.1",
-    "vite": "^5.4.1"
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "eslint": "^8",
+    "eslint-config-next": "15.0.0",
+    "typescript": "^5.9.0"
   }
 }
