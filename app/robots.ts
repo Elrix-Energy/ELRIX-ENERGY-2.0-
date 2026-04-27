@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/'],
     },
-    sitemap: 'https://elrixenergy.in/sitemap.xml',
+    sitemap: 'https://elrixenergy.com/sitemap.xml',
   };
 }

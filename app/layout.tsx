@@ -23,7 +23,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://elrixenergy.in"),
+  metadataBase: new URL("https://elrixenergy.com"),
   title: "Solar Company in Nellore, Tirupati, Kadapa & Ongole | ELRIX ENERGY",
   description:
     "Top-rated solar EPC company in Nellore serving Tirupati, Kadapa and Ongole. Residential, commercial and industrial solar installations with PM Surya Ghar subsidy support.",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "ELRIX ENERGY | Premium Solar Solutions",
     description: "South India's most trusted solar EPC. Eliminate your power bill with cyclone-proof solar installations.",
-    url: "https://elrixenergy.in",
+    url: "https://elrixenergy.com",
     siteName: "ELRIX ENERGY",
     locale: "en_IN",
     type: "website",
@@ -56,7 +56,7 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "HomeAndConstructionBusiness",
     "name": "ELRIX ENERGY SOLAR SOLUTIONS",
-    "image": "https://elrixenergy.in/logo.png",
+    "image": "https://elrixenergy.com/logo.png",
     "description": "Top-rated solar EPC company in Nellore serving Tirupati, Kadapa and Ongole. Residential, commercial and industrial solar installations.",
     "address": {
       "@type": "PostalAddress",
@@ -71,7 +71,7 @@ export default function RootLayout({
       "latitude": 14.4286,
       "longitude": 79.9825
     },
-    "url": "https://elrixenergy.in",
+    "url": "https://elrixenergy.com",
     "telephone": "+919640484677",
     "priceRange": "₹₹",
     "areaServed": ["Nellore", "Tirupati", "Kadapa", "Ongole"]

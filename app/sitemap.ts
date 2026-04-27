@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { blogArticles } from './data/blogData';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://elrixenergy.in';
+  const baseUrl = 'https://elrixenergy.com';
 
   // Static routes
   const staticRoutes = [
