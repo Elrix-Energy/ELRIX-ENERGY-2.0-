@@ -1,5 +1,11 @@
-import { redirect } from "next/navigation";
+import type { Metadata } from "next";
+import { permanentRedirect } from "next/navigation";
+
+/** Legacy route — content lives on /subsidy. Kept for redirect only. */
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 export default function FinancingPage() {
-  redirect("/subsidy#emi-calculator");
+  permanentRedirect("/subsidy");
 }

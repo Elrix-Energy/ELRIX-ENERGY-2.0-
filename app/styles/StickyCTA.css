@@ -4,13 +4,16 @@
   left: 0;
   right: 0;
   background: var(--primary-dark);
-  color: white;
-  padding: 0.75rem 0;
-  z-index: 998; /* Below mobile navbar, above normal content */
+  color: var(--white);
+  padding: var(--space-3) 0;
+  padding-bottom: calc(var(--space-3) + env(safe-area-inset-bottom, 0px));
+  z-index: var(--z-sticky);
   transform: translateY(100%);
-  transition: transform 0.4s ease, opacity 0.4s ease;
+  transition:
+    transform var(--motion-medium) var(--ease-standard),
+    opacity var(--motion-medium) var(--ease-standard);
   opacity: 0;
-  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--elev-3);
 }
 
 .sticky-cta-bar.visible {
@@ -22,66 +25,83 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1.5rem;
+  gap: var(--space-6);
   position: relative;
 }
 
 .sticky-cta-content p {
   margin: 0;
-  font-size: 1.05rem;
+  font-size: var(--text-base);
   font-weight: 500;
 }
 
 .sticky-cta-bar .btn-sm {
-  padding: 0.5rem 1.2rem;
-  font-size: 0.95rem;
+  padding: var(--space-2) var(--space-5);
+  font-size: var(--text-sm);
 }
 
 .sticky-cta-close {
   position: absolute;
-  right: 1.5rem;
+  right: var(--space-6);
   background: transparent;
   border: none;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgb(255 255 255 / 0.7);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem;
-  transition: color 0.2s ease;
+  padding: var(--space-2);
+  min-width: 44px;
+  min-height: 44px;
+  transition: color var(--motion-fast) var(--ease-standard);
 }
 
 .sticky-cta-close:hover {
-  color: white;
+  color: var(--white);
 }
 
-/* Push up floating buttons when sticky bar is visible so they don't overlap */
-body:has(.sticky-cta-bar.visible) .floating-calc-btn,
-body:has(.sticky-cta-bar.visible) .floating-whatsapp {
-  bottom: 80px;
+/* Reserve space so content isn't hidden behind sticky bar + safe area */
+body.sticky-cta-visible {
+  padding-bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
+}
+
+/* Push up floating buttons when sticky bar is visible */
+body.sticky-cta-visible .floating-calc-btn,
+body.sticky-cta-visible .floating-whatsapp {
+  bottom: calc(5rem + env(safe-area-inset-bottom, 0px));
 }
 
 @media (max-width: 768px) {
   .sticky-cta-content {
     flex-direction: column;
-    gap: 0.75rem;
-    padding: 0.5rem 0;
+    gap: var(--space-3);
+    padding: var(--space-2) 0;
   }
-  
+
   .sticky-cta-content p {
-    font-size: 0.95rem;
+    font-size: var(--text-sm);
     text-align: center;
-    padding-right: 2rem; /* Make room for close button */
+    padding-right: var(--space-8);
   }
-  
+
   .sticky-cta-close {
     top: 50%;
     transform: translateY(-50%);
-    right: 0.5rem;
+    right: var(--space-2);
   }
 
-  body:has(.sticky-cta-bar.visible) .floating-calc-btn,
-  body:has(.sticky-cta-bar.visible) .floating-whatsapp {
-    bottom: 120px;
+  body.sticky-cta-visible {
+    padding-bottom: calc(7rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  body.sticky-cta-visible .floating-calc-btn,
+  body.sticky-cta-visible .floating-whatsapp {
+    bottom: calc(7.5rem + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sticky-cta-bar {
+    transition: none;
   }
 }

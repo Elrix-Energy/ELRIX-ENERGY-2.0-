@@ -1,0 +1,56 @@
+.banner {
+  background: var(--white);
+  border: 1px solid var(--color-surface-3);
+  border-radius: var(--radius-lg);
+  bottom: var(--space-4);
+  box-shadow: var(--elev-3);
+  left: var(--space-4);
+  max-width: 28rem;
+  padding: var(--space-5);
+  position: fixed;
+  right: var(--space-4);
+  z-index: var(--z-modal);
+}
+
+@media (min-width: 640px) {
+  .banner {
+    left: auto;
+    right: var(--space-6);
+    max-width: 24rem;
+  }
+}
+
+.title {
+  font-size: var(--text-base);
+  font-weight: 700;
+  margin: 0 0 var(--space-2);
+}
+
+.text {
+  color: var(--text-light);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  margin: 0 0 var(--space-4);
+}
+
+.privacyLink {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.privacyLink:hover {
+  color: var(--color-accent-text);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.actions :global(.btn) {
+  flex: 1 1 auto;
+  min-width: 7rem;
+}

@@ -1,14 +1,17 @@
+import Image from "next/image";
+import { WHATSAPP } from "@/app/lib/siteConfig";
+
 export default function FloatingWhatsApp() {
   return (
     <a
-      href="https://wa.me/919640484677?text=Hi%20ELRIX%20ENERGY,%20I'm%20interested%20in%20a%20solar%20solution."
+      href={WHATSAPP.url(WHATSAPP.defaultMessage)}
       target="_blank"
       rel="noopener noreferrer"
       className="floating-whatsapp"
       aria-label="Chat on WhatsApp"
+      data-analytics-location="floating_whatsapp"
     >
-      <img src="/whatsapp.svg" alt="WhatsApp Icon" />
-      <span className="tooltip">Chat with us</span>
+      <Image src="/whatsapp.svg" alt="" width={32} height={32} aria-hidden="true" />      <span className="tooltip">Chat with us</span>
     </a>
   );
 }

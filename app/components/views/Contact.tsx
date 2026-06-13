@@ -1,0 +1,262 @@
+"use client";
+import React, { useState, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { MapPin, Phone, Mail, ExternalLink } from 'lucide-react';
+import Reveal from '../common/Reveal';
+import LazyGoogleMap from '../common/LazyGoogleMap';
+import { trackFormSubmit } from '@/app/lib/analytics';
+import { CONTACT, FORM_SUBMIT } from '@/app/lib/siteConfig';
+import styles from './Contact.module.css';
+
+type SubmitStatus = 'success' | 'error' | null;
+
+const ContactForm = () => {
+  const searchParams = useSearchParams();
+  const prefillBill = searchParams.get("bill") ?? "";
+  const systemSize = searchParams.get("systemSize") ?? "";
+  const lifetimeSavings = searchParams.get("lifetimeSavings") ?? "";
+  const leadSource = searchParams.get("lead_source") ?? "";
+
+  const prefillRequirement =
+    leadSource === "calculator" && systemSize
+      ? [
+          "Calculator estimate:",
+          prefillBill ? `- Monthly bill: ₹${prefillBill}` : null,
+          `- Recommended system: ${systemSize} kW`,
+          lifetimeSavings ? `- Est. 25-year savings: ₹${Number(lifetimeSavings).toLocaleString("en-IN")}` : null,
+          "",
+          "Please share a detailed quote.",
+        ]
+          .filter(Boolean)
+          .join("\n")
+      : "";
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<SubmitStatus>(null);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    const honeypot = String(formData.get("_honey") ?? "");
+    if (honeypot) {
+      setSubmitStatus("success");
+      setIsSubmitting(false);
+      return;
+    }
+
+    const name = String(formData.get("name") ?? "").trim();
+    const phone = String(formData.get("phone") ?? "").trim().replace(/\s+/g, "");
+    const location = String(formData.get("location") ?? "").trim();
+    const requirement = String(formData.get("requirement") ?? "").trim();
+
+    if (!name || !phone || !requirement || !location) {
+      setSubmitStatus("error");
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (!/^[6-9][0-9]{9}$/.test(phone)) {
+      setSubmitStatus("error");
+      setIsSubmitting(false);
+      return;
+    }
+
+    formData.delete("_honey");
+    formData.append("_captcha", "false");
+    formData.append("_template", "table");
+    formData.append(
+      "_subject",
+      `New Solar Inquiry from ${name} — ${location}${leadSource ? ` (${leadSource})` : ""}`,
+    );
+
+    try {
+      const response = await fetch(FORM_SUBMIT.ajaxUrl, {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Submission failed");
+      }
+
+      setSubmitStatus("success");
+      trackFormSubmit("contact", true);
+      form.reset();
+    } catch {
+      setSubmitStatus("error");
+      trackFormSubmit("contact", false);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="contact-page">
+      <header className="page-header">
+        <div className="container">
+          <h1>Contact Us</h1>
+          <p>Ready to go solar? Get in touch for a free site survey and quote.</p>
+        </div>
+      </header>
+
+      <section className="section bg-white">
+        <div className="container">
+          <Reveal>
+            <div className={styles.contactGrid}>
+              <div>
+                <h2>Get in Touch</h2>
+                <p className="mb-3">
+                  We guarantee prioritized site surveys and respond to all
+                  complex commercial and residential inquiries within 24 hours.
+                </p>
+
+                <div className={styles.infoItem}>
+                  <div className={styles.iconWrapper} aria-hidden="true"><MapPin size={24} /></div>
+                  <div>
+                    <h3>Head Office</h3>
+                    <p>{CONTACT.address}</p>
+                  </div>
+                </div>
+
+                <div className={styles.infoItem}>
+                  <div className={styles.iconWrapper} aria-hidden="true"><Phone size={24} /></div>
+                  <div>
+                    <h3>Phone Number</h3>
+                    <p>
+                      <a href={`tel:${CONTACT.phone}`} data-analytics-location="contact_page">
+                        {CONTACT.phoneDisplay}
+                      </a>
+                    </p>
+                  </div>
+                </div>
+
+                <div className={styles.infoItem}>
+                  <div className={styles.iconWrapper} aria-hidden="true"><Mail size={24} /></div>
+                  <div>
+                    <h3>Email Address</h3>
+                    <p><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></p>
+                  </div>
+                </div>
+              </div>
+
+              <div className={`${styles.contactFormContainer} glass`}>
+                <form onSubmit={handleSubmit} className={styles.contactForm} noValidate>
+                  {/* Honeypot — bots fill this; humans don't */}
+                  <input type="text" name="_honey" style={{ display: 'none' }} tabIndex={-1} aria-hidden="true" autoComplete="off" />
+                  {leadSource && <input type="hidden" name="leadSource" value={leadSource} />}
+                  {systemSize && <input type="hidden" name="systemSize" value={systemSize} />}
+                  {lifetimeSavings && <input type="hidden" name="lifetimeSavings" value={lifetimeSavings} />}
+
+                  <div className={styles.formGroup}>
+                    <label htmlFor="name">Full Name</label>
+                    <input type="text" id="name" name="name" required placeholder="Your full name" autoComplete="name" />
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label htmlFor="phone">Phone Number</label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      required
+                      placeholder="+91 98765 43210"
+                      autoComplete="tel"
+                      pattern="[6-9][0-9]{9}"
+                      title="Enter a valid 10-digit Indian mobile number"
+                    />
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label htmlFor="monthlyBill">Average Monthly Electricity Bill (₹)</label>
+                    <input
+                      type="number"
+                      id="monthlyBill"
+                      name="monthlyBill"
+                      placeholder="e.g. 5000"
+                      min="0"
+                      defaultValue={prefillBill}
+                    />
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label htmlFor="location">Required Location</label>
+                    <select id="location" name="location" required defaultValue="">
+                      <option value="" disabled>Select a city</option>
+                      <option value="Nellore">Nellore</option>
+                      <option value="Tirupati">Tirupati</option>
+                      <option value="Kadapa">Kadapa</option>
+                      <option value="Ongole">Ongole</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label htmlFor="requirement">
+                      Your Requirement (e.g., 3kW Residential, 50kW Commercial)
+                    </label>
+                    <textarea
+                      id="requirement"
+                      name="requirement"
+                      rows={4}
+                      required
+                      placeholder="Describe your energy needs..."
+                      defaultValue={prefillRequirement}
+                    />
+                  </div>
+
+                  <button type="submit" className={`btn btn-primary ${styles.w100}`} disabled={isSubmitting}>
+                    {isSubmitting ? 'Sending…' : 'Send Inquiry'}
+                  </button>
+
+                  <div role="status" aria-live="polite" aria-atomic="true">
+                    {submitStatus === 'success' && (
+                      <p className={`${styles.formMessage} ${styles.formMessageSuccess}`}>
+                        Thank you. Your inquiry has been sent successfully. Our team will get back to you within 24 hours.
+                      </p>
+                    )}
+                    {submitStatus === 'error' && (
+                      <p className={`${styles.formMessage} ${styles.formMessageError}`}>
+                        Something went wrong. Please try again or call us at{' '}
+                        <a href={`tel:${CONTACT.phone}`}>{CONTACT.phoneDisplay}</a>.
+                      </p>
+                    )}
+                  </div>
+                </form>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Map Section */}
+      <section className={styles.mapSection} aria-label="Office location map">
+        <h2 className="sr-only">Find Us</h2>
+        <a
+          className={styles.mapOpenButton}
+          href={CONTACT.mapsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open ELRIX Energy location in Google Maps"
+        >
+          <span>Open in Maps</span>
+          <ExternalLink size={16} aria-hidden="true" />
+        </a>
+        <LazyGoogleMap />
+      </section>
+    </div>
+  );
+};
+
+const Contact = () => (
+  <Suspense fallback={<div className={styles.contactPageSkeleton} aria-hidden="true" />}>
+    <ContactForm />
+  </Suspense>
+);
+
+export default Contact;

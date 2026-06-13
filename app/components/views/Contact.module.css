@@ -1,0 +1,147 @@
+.contactGrid {
+  display: grid;
+  gap: 4rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+.infoItem {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.iconWrapper {
+  align-items: center;
+  background: var(--primary-light);
+  border-radius: 50%;
+  color: var(--primary);
+  display: flex;
+  flex-shrink: 0;
+  height: 50px;
+  justify-content: center;
+  width: 50px;
+}
+
+.infoItem h4 {
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+}
+
+.infoItem p,
+.infoItem a {
+  color: var(--text-light);
+}
+
+.infoItem a:hover {
+  color: var(--primary);
+}
+
+.contactFormContainer {
+  background: white;
+  border: 1px solid rgb(0 0 0 / 0.05);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  padding: 3rem;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formGroup label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
+  border: 1px solid #cbd5e1;
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  padding: 0.75rem 1rem;
+  transition: border-color 0.3s;
+  width: 100%;
+}
+
+.formGroup input:focus,
+.formGroup select:focus,
+.formGroup textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+  outline: none;
+}
+
+.w100 {
+  width: 100%;
+}
+
+.contactForm :global(.btn:disabled) {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.formMessage {
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-top: 1rem;
+  padding: 0.9rem 1rem;
+}
+
+.formMessageSuccess {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
+}
+
+.formMessageError {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+}
+
+.mapSection {
+  position: relative;
+}
+
+.mapOpenButton {
+  align-items: center;
+  background: var(--white);
+  border-radius: 0.35rem;
+  box-shadow: var(--shadow-md);
+  color: #1967d2;
+  display: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  gap: 0.4rem;
+  left: 1rem;
+  padding: 0.7rem 0.9rem;
+  position: absolute;
+  top: 1rem;
+  z-index: 2;
+}
+
+.mapOpenButton:hover {
+  color: #174ea6;
+}
+
+.contactPageSkeleton {
+  min-height: 60vh;
+}
+
+@media (max-width: 768px) {
+  .contactGrid {
+    gap: 2rem;
+    grid-template-columns: 1fr;
+  }
+
+  .contactFormContainer {
+    padding: 2rem;
+  }
+
+  .mapOpenButton {
+    display: inline-flex;
+  }
+}

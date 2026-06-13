@@ -1,0 +1,68 @@
+.legal-page .legal-body {
+  color: var(--ink-2);
+  font-size: var(--text-base);
+  line-height: 1.75;
+  max-width: 48rem;
+}
+
+.legal-page .legal-body > p:first-of-type {
+  font-size: var(--text-md);
+}
+
+.legal-page .legal-updated {
+  color: var(--ink-3);
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-5);
+}
+
+.legal-page .legal-section {
+  margin-bottom: var(--space-6);
+}
+
+.legal-page .legal-section h2 {
+  color: var(--primary);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  margin: 0 0 var(--space-3);
+}
+
+.legal-page .legal-section p {
+  margin: 0 0 var(--space-3);
+}
+
+.legal-page .legal-section ul {
+  margin: 0 0 var(--space-3);
+  padding-left: var(--space-5);
+}
+
+.legal-page .legal-section li {
+  margin-bottom: var(--space-2);
+}
+
+.legal-page .legal-section a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.legal-page .legal-section a:hover {
+  color: var(--color-accent-text);
+}
+
+.legal-page .legal-contact {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-surface-3);
+  border-radius: var(--radius-md);
+  margin-top: var(--space-6);
+  padding: var(--space-4);
+}
+
+.legal-page .legal-contact h2 {
+  font-size: var(--text-md);
+  margin-bottom: var(--space-2);
+}
+
+.legal-page .legal-contact p {
+  margin: 0;
+}

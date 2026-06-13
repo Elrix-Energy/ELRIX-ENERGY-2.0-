@@ -1,0 +1,262 @@
+/* ============================================================
+   SHARED UI PRIMITIVES
+   BEM-style global classes for app/components/ui and sections
+   ============================================================ */
+
+.ui-button--sm {
+  min-height: 40px;
+  padding-inline: var(--space-4);
+  font-size: var(--text-sm);
+}
+
+.ui-button--md {
+  min-height: 44px;
+}
+
+.ui-button--lg {
+  min-height: 48px;
+  padding-inline: var(--space-6);
+  font-size: var(--text-base);
+}
+
+.ui-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.ui-field__label {
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.ui-field__control {
+  width: 100%;
+  border: 1px solid var(--color-surface-3);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  color: var(--ink-1);
+  background: var(--white);
+  font: inherit;
+  min-height: 44px;
+}
+
+.ui-field__control--textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.ui-field__hint {
+  color: var(--ink-3);
+  font-size: var(--text-sm);
+}
+
+.ui-field__error {
+  color: var(--danger);
+  font-size: var(--text-sm);
+}
+
+.ui-card {
+  border-radius: var(--radius-lg);
+  transition:
+    box-shadow var(--motion-medium) var(--ease-standard),
+    transform var(--motion-fast) var(--ease-standard),
+    border-color var(--motion-fast) var(--ease-standard);
+}
+
+.ui-card--pad-sm {
+  padding: var(--space-4);
+}
+
+.ui-card--pad-md {
+  padding: var(--space-6);
+}
+
+.ui-card--pad-lg {
+  padding: var(--space-10);
+}
+
+.ui-card--elevated {
+  background: var(--white);
+  box-shadow: var(--elev-2);
+}
+
+.ui-card--outlined {
+  background: var(--white);
+  border: 1px solid var(--color-surface-3);
+}
+
+.ui-card--glass {
+  background: var(--white);
+  border: 1px solid rgb(15 23 42 / 0.06);
+  box-shadow: var(--elev-2);
+}
+
+.ui-card--accent {
+  background: var(--primary);
+  color: var(--white);
+  box-shadow: var(--elev-3);
+}
+
+.ui-card--result {
+  background: var(--white);
+  border: 1px solid var(--color-surface-3);
+}
+
+.ui-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border-radius: var(--radius-pill);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ui-badge--neutral {
+  background: var(--color-surface-2);
+  color: var(--ink-2);
+}
+
+.ui-badge--accent {
+  background: var(--accent);
+  color: var(--primary);
+}
+
+.ui-badge--success {
+  background: rgb(16 185 129 / 0.12);
+  color: var(--success);
+}
+
+.ui-badge--brand {
+  background: rgb(245 180 0 / 0.12);
+  color: var(--primary);
+}
+
+.ui-eyebrow {
+  color: var(--color-accent-text);
+  font-size: var(--text-sm);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  margin-bottom: var(--space-3);
+  text-transform: uppercase;
+}
+
+.ui-section {
+  padding-block: var(--space-20);
+}
+
+.ui-section--sm {
+  padding-block: var(--space-10);
+}
+
+.ui-section--md {
+  padding-block: var(--space-16);
+}
+
+.ui-section--lg {
+  padding-block: var(--space-20);
+}
+
+.ui-section--white {
+  background: var(--white);
+}
+
+.ui-section--background {
+  background: var(--background);
+}
+
+.ui-section--light {
+  background: var(--color-surface-2);
+}
+
+.ui-section--brand {
+  background: var(--primary);
+  color: var(--white);
+}
+
+/* ----------------------------------------------------------
+   Shared sections
+---------------------------------------------------------- */
+
+.trust-strip--shared .trust-strip-inner {
+  gap: var(--space-4);
+}
+
+.trust-strip__item {
+  flex: 0 1 auto;
+}
+
+/* On the dark navy trust strip, badge--brand colours must be light */
+.trust-strip .ui-badge--brand {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.ui-final-cta__description {
+  color: var(--ink-3);
+  font-size: var(--text-lg);
+  margin: 0 auto var(--space-8);
+  max-width: 56ch;
+}
+
+.ui-final-cta__actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  justify-content: center;
+}
+
+.ui-final-cta--embedded {
+  background: transparent;
+  padding-block: var(--space-12) 0;
+}
+
+.ui-emi__intro p {
+  color: var(--ink-3);
+}
+
+.ui-emi__box {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.ui-emi__form {
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-bottom: var(--space-6);
+}
+
+.ui-emi__results {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: var(--space-8);
+}
+
+.ui-emi__result-card {
+  text-align: center;
+}
+
+.ui-emi__result-card h3 {
+  color: var(--ink-3);
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-2);
+}
+
+@media (max-width: 768px) {
+  .ui-emi__form,
+  .ui-emi__results {
+    grid-template-columns: 1fr;
+  }
+
+  .ui-final-cta__actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

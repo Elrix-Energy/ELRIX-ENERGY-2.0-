@@ -1,35 +1,209 @@
-:root {
-  --primary: #000000; /* Sleek Black */
-  --primary-dark: #1a1a1a;
-  --primary-light: #e5e7eb;
-  --secondary: #000000; /* Sleek Black */
-  --secondary-dark: #1a1a1a;
-  --text-dark: #111827;
-  --text-light: #6b7280;
-  --background: #fdfbfc;
-  --white: #ffffff;
-  --danger: #ef4444;
-  --success: #10b981;
-  
-  --font-heading: 'Outfit', sans-serif;
-  --font-body: 'Inter', sans-serif;
-  
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+/* ============================================================
+   ELRIX ENERGY V2 — Design System Tokens
+   Single source of truth for all design values.
+   Do not hardcode raw values in components — always use tokens.
+   ============================================================ */
 
-  --radius-md: 0.5rem;
-  --radius-lg: 1rem;
-  --radius-xl: 1.5rem;
-  
-  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+:root {
+
+  /* ----------------------------------------------------------
+     COLOUR — Brand
+  ---------------------------------------------------------- */
+  --color-brand-900: #060e1b;
+  --color-brand-800: #0b1d38;   /* deep navy — hero backgrounds */
+  --color-brand-700: #102a50;   /* --primary-dark */
+  --color-brand-600: #163869;
+  --color-brand-500: #0b1f3a;   /* --primary — main brand navy */
+  --color-brand-400: #2b4f82;
+  --color-brand-300: #4d73a8;
+  --color-brand-200: #8fafd1;
+  --color-brand-100: #d0dff0;
+  --color-brand-50:  #edf2f9;
+
+  --color-accent-600: #c89200;  /* dark gold — hover */
+  --color-accent-500: #f5b400;  /* --accent — solar gold (use on dark surfaces only) */
+  --color-accent-400: #f7c133;
+  --color-accent-100: #fef3cd;
+  --color-accent-50:  #fffbeb;
+
+  /* Dark amber — use for gold-coloured TEXT on white/light backgrounds (6.4:1 contrast) */
+  --color-accent-text: #7a5500;
+
+  --color-success-700: #065f46;
+  --color-success-500: #10b981;
+  --color-success-100: #d1fae5;
+
+  --color-danger-700:  #991b1b;
+  --color-danger-500:  #ef4444;
+  --color-danger-100:  #fee2e2;
+
+  /* ----------------------------------------------------------
+     COLOUR — Ink (text) & Surface (backgrounds)
+  ---------------------------------------------------------- */
+  --color-ink-900: #0f172a;  /* --text-dark */
+  --color-ink-700: #1e293b;
+  --color-ink-600: #334155;
+  --color-ink-500: #4b5563;  /* --text-light */
+  --color-ink-400: #6b7280;
+  --color-ink-300: #9ca3af;
+  --color-ink-200: #cbd5e1;
+  --color-ink-100: #e2e8f0;
+
+  --color-surface-0: #ffffff;
+  --color-surface-1: #fdfbfc;  /* --background */
+  --color-surface-2: #f1f5f9;
+  --color-surface-3: #e5e7eb;  /* --primary-light */
+
+  /* ----------------------------------------------------------
+     COLOUR — Semantic aliases (backward-compatible)
+  ---------------------------------------------------------- */
+  --primary:       var(--color-brand-500);
+  --primary-dark:  var(--color-brand-700);
+  --primary-light: var(--color-surface-3);
+  --secondary:     var(--color-brand-700);  /* navy-700 — distinct from primary */
+  --secondary-dark: var(--color-brand-800);
+  --accent:        var(--color-accent-500);
+
+  --text-dark:   var(--color-ink-900);
+  --text-light:  var(--color-ink-500);
+  --background:  var(--color-surface-1);
+  --white:       var(--color-surface-0);
+  --danger:      var(--color-danger-500);
+  --success:     var(--color-success-500);
+
+  /* ----------------------------------------------------------
+     TYPOGRAPHY — Font families (set via next/font CSS variables)
+  ---------------------------------------------------------- */
+  --font-heading: var(--font-heading-var, 'Outfit', sans-serif);
+  --font-body:    var(--font-body-var, 'Inter', sans-serif);
+
+  /* ----------------------------------------------------------
+     TYPOGRAPHY — Type scale (modular, 1.25 ratio)
+  ---------------------------------------------------------- */
+  --text-xs:   0.75rem;    /* 12px */
+  --text-sm:   0.875rem;   /* 14px */
+  --text-base: 1rem;       /* 16px */
+  --text-lg:   1.125rem;   /* 18px */
+  --text-xl:   1.25rem;    /* 20px */
+  --text-2xl:  1.5rem;     /* 24px */
+  --text-3xl:  1.875rem;   /* 30px */
+  --text-4xl:  2.25rem;    /* 36px */
+  --text-5xl:  3rem;       /* 48px */
+  --text-6xl:  3.75rem;    /* 60px */
+
+  /* ----------------------------------------------------------
+     SPACING — 4pt scale
+  ---------------------------------------------------------- */
+  --space-1:  0.25rem;   /* 4px  */
+  --space-2:  0.5rem;    /* 8px  */
+  --space-3:  0.75rem;   /* 12px */
+  --space-4:  1rem;      /* 16px */
+  --space-5:  1.25rem;   /* 20px */
+  --space-6:  1.5rem;    /* 24px */
+  --space-8:  2rem;      /* 32px */
+  --space-10: 2.5rem;    /* 40px */
+  --space-12: 3rem;      /* 48px */
+  --space-16: 4rem;      /* 64px */
+  --space-20: 5rem;      /* 80px */
+  --space-24: 6rem;      /* 96px */
+
+  /* ----------------------------------------------------------
+     RADIUS
+  ---------------------------------------------------------- */
+  --radius-sm:   0.25rem;
+  --radius-md:   0.5rem;
+  --radius-lg:   0.75rem;
+  --radius-xl:   1rem;
+  --radius-2xl:  1.5rem;
+  --radius-pill: 9999px;
+
+  /* ----------------------------------------------------------
+     ELEVATION / SHADOWS (brand-tinted)
+  ---------------------------------------------------------- */
+  --elev-0: none;
+  --elev-1: 0 1px 2px 0 rgb(11 31 58 / 0.06);
+  --elev-2: 0 4px 12px -2px rgb(11 31 58 / 0.10);
+  --elev-3: 0 12px 32px -8px rgb(11 31 58 / 0.14);
+  --elev-4: 0 24px 48px -12px rgb(11 31 58 / 0.18);
+
+  /* Legacy aliases (keep while pages migrate) */
+  --shadow-sm: var(--elev-1);
+  --shadow-md: var(--elev-2);
+  --shadow-lg: var(--elev-3);
+  --shadow-xl: var(--elev-4);
+
+  /* ----------------------------------------------------------
+     Z-INDEX SCALE
+  ---------------------------------------------------------- */
+  --z-base:     0;
+  --z-raised:   10;
+  --z-sticky:   100;
+  --z-floating: 500;
+  --z-navbar:   1000;
+  --z-modal:    2000;
+  --z-toast:    3000;
+
+  /* ----------------------------------------------------------
+     MOTION / ANIMATION
+  ---------------------------------------------------------- */
+  --ease-standard:   cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-decel:      cubic-bezier(0.0, 0.0, 0.2, 1);
+  --ease-accel:      cubic-bezier(0.4, 0.0, 1, 1);
+  --ease-spring:     cubic-bezier(0.165, 0.84, 0.44, 1);
+
+  --motion-instant: 0ms;
+  --motion-fast:    150ms;
+  --motion-medium:  250ms;
+  --motion-slow:    400ms;
+  --motion-reveal:  600ms;
+
+  /* Legacy — keep while components migrate */
+  --transition: background-color var(--motion-medium) var(--ease-standard),
+                color             var(--motion-fast)   var(--ease-standard),
+                border-color      var(--motion-fast)   var(--ease-standard),
+                box-shadow        var(--motion-medium) var(--ease-standard),
+                transform         var(--motion-fast)   var(--ease-standard),
+                opacity           var(--motion-medium) var(--ease-standard);
 }
 
-* {
+
+/* ============================================================
+   GLOBAL RESET
+   ============================================================ */
+
+*, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+/* ============================================================
+   GLOBAL FOCUS — WCAG 2.2 AA minimum
+   Use accent gold ring visible on both light and dark surfaces.
+   ============================================================ */
+
+*:focus {
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* ============================================================
+   BASE STYLES
+   ============================================================ */
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {
@@ -37,22 +211,32 @@ body {
   background-color: var(--background);
   color: var(--text-dark);
   line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* ============================================================
+   TYPOGRAPHY
+   Using clamp() for fluid scaling — no separate mobile overrides needed.
+   ============================================================ */
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   font-weight: 700;
   line-height: 1.2;
+  color: var(--text-dark);
 }
 
-h1 { font-size: 3rem; }
-h2 { font-size: 2.25rem; }
-h3 { font-size: 1.5rem; }
+/* Fluid scale: clamp(mobile-min, fluid-mid, desktop-max) */
+h1 { font-size: clamp(2rem, 4vw + 1rem, 3.25rem); }
+h2 { font-size: clamp(1.625rem, 2.5vw + 0.75rem, 2.25rem); }
+h3 { font-size: clamp(1.125rem, 1.5vw + 0.5rem, 1.5rem); }
+h4 { font-size: clamp(1rem, 1vw + 0.5rem, 1.125rem); }
 
 a {
   text-decoration: none;
   color: inherit;
-  transition: var(--transition);
+  transition: color var(--motion-fast) var(--ease-standard);
 }
 
 ul {
@@ -62,100 +246,214 @@ ul {
 img {
   max-width: 100%;
   height: auto;
+  display: block;
 }
+
+/* ============================================================
+   LAYOUT PRIMITIVES
+   ============================================================ */
 
 .container {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 var(--space-6);
 }
 
 .section {
-  padding: 5rem 0;
+  padding: var(--space-20) 0;
 }
 
-/* Utilities */
-.text-primary { color: var(--primary); }
-.text-secondary { color: var(--secondary); }
-.bg-primary { background-color: var(--primary); color: #fff; }
-.bg-secondary { background-color: var(--secondary); color: #fff; }
+@media (max-width: 768px) {
+  .container {
+    padding: 0 var(--space-4);
+  }
+  .section {
+    padding: var(--space-12) 0;
+  }
+}
 
-.text-center { text-align: center; }
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+
+/* Colour */
+.text-primary   { color: var(--primary); }
+.text-secondary { color: var(--secondary); }
+.text-accent    { color: var(--color-accent-text); }
+.text-light     { color: var(--text-light); }
+.text-white     { color: var(--white); }
+
+.bg-primary     { background-color: var(--primary); color: var(--white); }
+.bg-secondary   { background-color: var(--secondary); color: var(--white); }
+.bg-accent      { background-color: var(--accent); color: var(--color-ink-900); }
+.bg-white       { background-color: var(--white); }
+.bg-background  { background-color: var(--background); }
+
+/* Text */
+.text-center    { text-align: center; }
+.text-left      { text-align: left; }
+.text-right     { text-align: right; }
+.font-bold      { font-weight: 700; }
 
 .text-lg {
-  font-size: 1.1rem;
+  font-size: var(--text-lg);
   line-height: 1.7;
 }
 
-/* Buttons */
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.75rem 1.75rem;
+  padding: var(--space-3) var(--space-6);
   font-weight: 600;
-  border-radius: var(--radius-md);
-  border: none;
-  cursor: pointer;
-  transition: var(--transition);
+  font-size: var(--text-base);
   font-family: var(--font-body);
-  gap: 0.5rem;
-  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-md);
+  border: 2px solid transparent;
+  cursor: pointer;
+  gap: var(--space-2);
+  box-shadow: var(--elev-1);
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color var(--motion-fast) var(--ease-standard),
+    color            var(--motion-fast) var(--ease-standard),
+    border-color     var(--motion-fast) var(--ease-standard),
+    box-shadow       var(--motion-medium) var(--ease-standard),
+    transform        var(--motion-fast) var(--ease-standard);
 }
 
+/* Primary — navy */
 .btn-primary {
   background-color: var(--primary);
   color: var(--white);
+  border-color: var(--primary);
 }
-
 .btn-primary:hover {
   background-color: var(--primary-dark);
+  border-color: var(--primary-dark);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--elev-3);
 }
 
+/* Secondary — darker navy */
 .btn-secondary {
   background-color: var(--secondary);
   color: var(--white);
+  border-color: var(--secondary);
 }
-
 .btn-secondary:hover {
   background-color: var(--secondary-dark);
+  border-color: var(--secondary-dark);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--elev-3);
 }
 
+/* Outline — navy border */
 .btn-outline {
   background-color: transparent;
-  border: 2px solid var(--primary);
+  border-color: var(--primary);
   color: var(--primary);
   box-shadow: none;
 }
-
 .btn-outline:hover {
   background-color: var(--primary);
   color: var(--white);
 }
 
+/* Ghost — minimal */
+.btn-ghost {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--primary);
+  box-shadow: none;
+}
+.btn-ghost:hover {
+  background-color: var(--color-brand-50);
+}
+
+/* Accent — gold CTA */
+.btn-accent {
+  background-color: var(--accent);
+  color: var(--color-ink-900);
+  border-color: var(--accent);
+}
+.btn-accent:hover {
+  background-color: var(--color-accent-600);
+  border-color: var(--color-accent-600);
+  transform: translateY(-2px);
+  box-shadow: var(--elev-3);
+}
+
+/* Hero variants (on dark backgrounds) */
+.btn-hero-primary {
+  background-color: var(--white);
+  color: var(--primary);
+  border-color: var(--white);
+  font-weight: 700;
+}
+.btn-hero-primary:hover {
+  background-color: var(--color-brand-50);
+  border-color: var(--color-brand-50);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgb(255 255 255 / 0.2);
+}
+
+.btn-hero-outline {
+  background-color: transparent;
+  border-color: rgb(255 255 255 / 0.8);
+  color: var(--white);
+}
+.btn-hero-outline:hover {
+  background-color: var(--white);
+  border-color: var(--white);
+  color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: var(--elev-2);
+}
+
+/* Size modifiers */
+.btn-sm {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+}
+
+.btn-lg {
+  padding: var(--space-4) var(--space-8);
+  font-size: var(--text-lg);
+}
+
+/* Active state — all variants */
 .btn:active {
   transform: translateY(0) scale(0.98);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--elev-1);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  h1 { font-size: 2.5rem; }
-  h2 { font-size: 2rem; }
-  h3 { font-size: 1.25rem; }
-  .section { padding: 3rem 0; }
+/* Disabled state */
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  pointer-events: none;
 }
 
-/* --- Native Intersection Reveal Animations --- */
+/* ============================================================
+   REVEAL ANIMATION
+   Respects prefers-reduced-motion.
+   ============================================================ */
+
 .reveal {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transform: translateY(24px);
+  transition:
+    opacity  var(--motion-reveal) var(--ease-spring),
+    transform var(--motion-reveal) var(--ease-spring);
   will-change: opacity, transform;
 }
 
@@ -163,3 +461,44 @@ img {
   opacity: 1;
   transform: translateY(0);
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    will-change: auto;
+  }
+  .reveal.active {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ============================================================
+   SPACING UTILITY SHORTHANDS
+   Used by components during migration off inline styles.
+   ============================================================ */
+
+.mb-1  { margin-bottom: var(--space-4); }
+.mb-2  { margin-bottom: var(--space-8); }
+.mb-3  { margin-bottom: var(--space-12); }
+.mb-4  { margin-bottom: var(--space-16); }
+.mt-1  { margin-top: var(--space-4); }
+.mt-2  { margin-top: var(--space-8); }
+.mt-3  { margin-top: var(--space-12); }
+.mr-1  { margin-right: var(--space-4); }
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.inline-block { display: inline-block; }
+.w-100        { width: 100%; }
+
+
+

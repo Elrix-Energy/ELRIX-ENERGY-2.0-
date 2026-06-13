@@ -188,3 +188,7 @@
     font-size: 2.5rem;
   }
 }
+
+#emi-calculator {
+  scroll-margin-top: 80px;
+}

@@ -3,6 +3,11 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
+function prefersReducedMotion(): boolean {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
 export default function ScrollManager() {
   const pathname = usePathname();
 
@@ -14,9 +19,10 @@ export default function ScrollManager() {
       const element = document.getElementById(hash.replace("#", ""));
       if (!element) return false;
 
-      // Let layout settle (Navbar height/route paint) before scrolling.
+      const behavior = prefersReducedMotion() ? "auto" : "smooth";
+
       setTimeout(() => {
-        element.scrollIntoView({ behavior: "smooth", block: "start" });
+        element.scrollIntoView({ behavior, block: "start" });
       }, 100);
       return true;
     };
