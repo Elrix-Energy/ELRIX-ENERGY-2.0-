@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CheckSquare, Sun, IndianRupee, ShieldCheck, Wrench, ArrowRight } from "lucide-react";
 import { PUBLIC_ASSETS, SITE_URL } from "../../lib/siteConfig";
-import { buildCanonical, buildPageMetadata } from "../../lib/seoConfig";
+import { buildCanonical, buildPageMetadata, routeOgImage } from "../../lib/seoConfig";
 import { buildServiceSchema } from "../../lib/citySchema";
 import { FinalCta } from "../../components/sections";
 import ContentImage from "../../components/common/ContentImage";
@@ -13,6 +13,7 @@ export const metadata: Metadata = buildPageMetadata({
   description:
     "1kW–10kW rooftop solar for homes in Nellore, Tirupati, Kadapa and Ongole. PM Surya Ghar subsidy up to ₹78,000, net metering and free site survey.",
   path: "/services/residential",
+  images: [routeOgImage("/services/residential", "Residential Solar Installation | ELRIX ENERGY")],
 });
 
 const serviceSchema = buildServiceSchema({

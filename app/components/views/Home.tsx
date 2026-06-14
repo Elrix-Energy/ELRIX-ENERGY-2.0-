@@ -1,20 +1,26 @@
 "use client";
 
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
+import Image from "next/image";
 import Link from "next/link";
 import { Sun, ShieldCheck, Wrench, IndianRupee, ChevronDown, ChevronUp } from "lucide-react";
 import Reveal from "../common/Reveal";
 import HeroBackground from "../common/HeroBackground";
-import {
-  HeroCta,
-  SubsidyHook,
-  SolarCalculator,
-  TestimonialMarquee,
-  TrustStrip,
-} from "../sections";
+import { HeroCta, SubsidyHook, TrustStrip } from "../sections";
 import { Card } from "../ui";
-import { blogArticles } from "@/app/data/blogData";
+import { homeFaqs } from "@/app/data/homeFaqs";
+import { getLatestBlogArticles } from "@/app/lib/blogCityLinks";
+import { estimateReadingTimeMinutes, formatReadingTime } from "@/app/lib/blogUtils";
 import { CONTACT, WHATSAPP } from "@/app/lib/siteConfig";
+
+const SolarCalculator = dynamic(() => import("../sections/SolarCalculator"), {
+  loading: () => <div className="solar-calculator-skeleton" aria-hidden="true" />,
+});
+
+const TestimonialMarquee = dynamic(() => import("../sections/TestimonialMarquee"), {
+  loading: () => <div className="testimonial-marquee-skeleton" aria-hidden="true" />,
+});
 
 const serviceCards = [
   {
@@ -34,120 +40,7 @@ const serviceCards = [
   },
 ];
 
-const faqItems = [
-  {
-    q: "Does solar work in the rainy season?",
-    a: (
-      <>
-        Yes! While peak efficiency occurs on clear days, solar panels still generate electricity
-        during the monsoon. Thanks to Net Metering, the massive excess power you generate during
-        the summer essentially &ldquo;banks&rdquo; credits to offset lower generation during
-        cloudy months.
-      </>
-    ),
-  },
-  {
-    q: "Will my electricity bill be absolutely zero?",
-    a: (
-      <>
-        Practically, yes. All of your actual energy usage charges can be completely offset to
-        zero. However, you will still receive a very minimal monthly bill from your DISCOM
-        specifically to cover basic fixed grid-connection charges.
-      </>
-    ),
-  },
-  {
-    q: "Do you handle solar loan processing and financing?",
-    a: (
-      <>
-        Absolutely. We have direct partnerships with leading banks to provide seamless EMI
-        support. Our team at <strong>ELRIX ENERGY</strong> guides you through the entire
-        documentation process, making the financial transition to solar effortless.
-      </>
-    ),
-  },
-  {
-    q: "Is ELRIX ENERGY an officially empanelled vendor?",
-    a: (
-      <>
-        Yes. <strong>ELRIX ENERGY</strong> is an officially registered and empanelled vendor.
-        This guarantees that all our installations meet strict government standards and ensures
-        you are fully eligible for the PM Surya Ghar subsidy scheme.
-      </>
-    ),
-  },
-  {
-    q: "What is the difference between DCR and Non-DCR panels?",
-    a: (
-      <>
-        DCR (Domestic Content Requirement) panels are manufactured entirely in India out of
-        Indian cells, which is a strictly mandatory requirement to claim residential government
-        subsidies. Non-DCR panels often utilize imported components and are used aggressively in
-        commercial projects where subsidies do not apply.
-      </>
-    ),
-  },
-  {
-    q: "What is the expected Return on Investment (ROI)?",
-    a: (
-      <>
-        Solar is one of the highest-yield low-risk investments available today. Residential
-        setups typically see a full ROI within <strong>36 to 60 months</strong>. Commercial and
-        industrial installations often achieve ROI in just <strong>24 to 48 months</strong>{" "}
-        largely due to accelerated depreciation tax benefits.
-      </>
-    ),
-  },
-  {
-    q: "Can commercial business owners get the government subsidy?",
-    a: (
-      <>
-        No, centralized government subsidies like PM Surya Ghar are exclusively for residential
-        homeowners. Commercial clients, however, benefit heavily from aggressive tax exemptions
-        under Section 32 of the Income Tax Act (Accelerated Depreciation).
-      </>
-    ),
-  },
-  {
-    q: "What is Net Metering and how does it work?",
-    a: (
-      <>
-        Net metering is a grid-connected billing mechanism. If your panels produce more power
-        than your property uses during the day, the excess electricity is exported back to the
-        DISCOM, and you are financially credited for it on your next billing cycle!
-      </>
-    ),
-  },
-  {
-    q: "How much maintenance do solar panels actually require?",
-    a: (
-      <>
-        Very minimal! Because Tier-1 solar panels have absolutely no moving parts, the only
-        regular residential maintenance required is occasionally washing the surface with clean
-        water to remove accumulated dust. <strong>ELRIX</strong> also offers dedicated automated
-        maintenance packages for commercial sites.
-      </>
-    ),
-  },
-  {
-    q: "Do on-grid solar systems work during a grid power outage?",
-    a: (
-      <>
-        Standard grid-tied (On-Grid) systems without batteries will automatically shut down
-        during a blackout. This is a mandatory safety mechanism to protect DISCOM linesmen
-        repairing the grid. If you require backup power during outages,{" "}
-        <strong>ELRIX</strong> offers Hybrid systems directly integrated with battery storage.
-      </>
-    ),
-  },
-];
-
-const blogPreviews = [...blogArticles]
-  .sort(
-    (a, b) =>
-      new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime()
-  )
-  .slice(0, 2);
+const blogPreviews = getLatestBlogArticles(3);
 
 const heroHighlights = [
   { value: "₹78,000", label: "Max PM Surya Ghar subsidy" },
@@ -157,7 +50,6 @@ const heroHighlights = [
 
 const Home = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [showAllFaqs, setShowAllFaqs] = useState(false);
 
   const toggleFaq = (index: number) => {
     setOpenFaq(openFaq === index ? null : index);
@@ -307,7 +199,7 @@ const Home = () => {
               <h2 className="faq-section-heading">Frequently Asked Questions</h2>
             </div>
             <div className="faq-container">
-              {faqItems.slice(0, showAllFaqs ? faqItems.length : 5).map((faq, index) => (
+              {homeFaqs.map((faq, index) => (
                 <div
                   key={faq.q}
                   className={`faq-item ${openFaq === index ? "active" : ""}`}
@@ -330,19 +222,11 @@ const Home = () => {
                       <ChevronDown size={20} className="text-light" aria-hidden="true" />
                     )}
                   </div>
-                  {openFaq === index && <p className="faq-item__answer">{faq.a}</p>}
+                  <div className="faq-item__answer-wrap">
+                    <p className="faq-item__answer">{faq.a}</p>
+                  </div>
                 </div>
               ))}
-
-              <div className="faq-toggle-wrap">
-                <button
-                  type="button"
-                  onClick={() => setShowAllFaqs(!showAllFaqs)}
-                  className="btn btn-outline faq-toggle-btn"
-                >
-                  {showAllFaqs ? "View Less FAQs" : "View All FAQs"}
-                </button>
-              </div>
             </div>
           </Reveal>
         </div>
@@ -360,14 +244,31 @@ const Home = () => {
           <div className="blogs-preview-grid">
             {blogPreviews.map((post, index) => (
               <Reveal delay={index * 150} key={post.id}>
-                <div className="home-blog-card bg-white">
-                  <p className="blog-date">{post.date}</p>
-                  <h3>{post.title}</h3>
-                  <p>{post.summary}</p>
-                  <Link href={`/blog/${post.slug}`} className="text-primary font-bold mt-1 inline-block">
-                    Read More &rarr;
+                <article className="home-blog-card bg-white">
+                  <Link href={`/blog/${post.slug}`} className="home-blog-card__media">
+                    <Image
+                      src={post.image}
+                      alt={post.title}
+                      width={640}
+                      height={360}
+                      sizes="(max-width: 768px) 100vw, 320px"
+                      className="home-blog-card__image"
+                    />
                   </Link>
-                </div>
+                  <div className="home-blog-card__body">
+                    <p className="blog-date">{post.date}</p>
+                    <h3>
+                      <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                    </h3>
+                    <p>{post.summary}</p>
+                    <p className="home-blog-card__meta">
+                      {formatReadingTime(estimateReadingTimeMinutes(post.content))}
+                    </p>
+                    <Link href={`/blog/${post.slug}`} className="text-primary font-bold mt-1 inline-block">
+                      Read More &rarr;
+                    </Link>
+                  </div>
+                </article>
               </Reveal>
             ))}
           </div>

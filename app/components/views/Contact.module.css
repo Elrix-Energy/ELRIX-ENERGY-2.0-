@@ -102,6 +102,19 @@
   color: #991b1b;
 }
 
+.recaptchaNotice {
+  color: var(--text-light);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  margin: var(--space-3) 0 0;
+  text-align: center;
+}
+
+.recaptchaNotice a {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
 .mapSection {
   position: relative;
 }

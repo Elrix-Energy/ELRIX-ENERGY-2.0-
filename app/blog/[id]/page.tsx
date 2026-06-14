@@ -7,11 +7,13 @@ import { blogArticles } from "../../data/blogData";
 import { BlogRelatedLinks } from "../../components/blog/BlogRelatedLinks";
 import BlogTableOfContents from "../../components/blog/BlogTableOfContents";
 import { buildPageMetadata } from "../../lib/seoConfig";
+import { buildFaqPageSchema } from "../../lib/citySchema";
 import {
   estimateReadingTimeMinutes,
+  extractBlogFaqs,
+  enhanceArticleHtml,
   extractH2Headings,
   formatReadingTime,
-  injectHeadingIds,
 } from "../../lib/blogUtils";
 import { BRAND, SITE_URL } from "../../lib/siteConfig";
 
@@ -59,8 +61,10 @@ export default async function BlogPostPage({
 
   const readingMinutes = estimateReadingTimeMinutes(article.content);
   const readingLabel = formatReadingTime(readingMinutes);
-  const articleHtml = injectHeadingIds(article.content);
+  const articleHtml = enhanceArticleHtml(article.content);
   const tocHeadings = extractH2Headings(articleHtml);
+  const blogFaqs = extractBlogFaqs(article.content);
+  const faqSchema = blogFaqs.length > 0 ? buildFaqPageSchema(blogFaqs) : null;
 
   const articleSchema = {
     "@context": "https://schema.org",
@@ -116,6 +120,12 @@ export default async function BlogPostPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
+      {faqSchema ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      ) : null}
       <div className="container blog-post-container">
         <Link href="/blog" className="text-primary blog-back-link">
           <ArrowLeft size={18} aria-hidden="true" /> Back to Articles
@@ -124,16 +134,13 @@ export default async function BlogPostPage({
         <figure className="blog-post-hero">
           <Image
             src={article.image}
-            alt=""
+            alt={article.title}
             width={1200}
             height={675}
             priority
             sizes="(max-width: 800px) 100vw, 800px"
             className="blog-post-hero__image"
           />
-          {article.imageCredit ? (
-            <figcaption className="blog-post-hero__credit">{article.imageCredit}</figcaption>
-          ) : null}
         </figure>
 
         <header className="blog-post-header">

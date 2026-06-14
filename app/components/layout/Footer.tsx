@@ -58,6 +58,7 @@ export default function Footer() {
               <li><Link href="/"><ArrowRight size={16} aria-hidden="true" /> Home</Link></li>
               <li><Link href="/#calculator"><ArrowRight size={16} aria-hidden="true" /> Solar Calculator</Link></li>
               <li><Link href="/about"><ArrowRight size={16} aria-hidden="true" /> About Us</Link></li>
+              <li><Link href="/projects"><ArrowRight size={16} aria-hidden="true" /> Projects</Link></li>
               <li><Link href="/blog"><ArrowRight size={16} aria-hidden="true" /> Resources</Link></li>
               <li><Link href="/contact"><ArrowRight size={16} aria-hidden="true" /> Contact Us</Link></li>
             </ul>
@@ -120,7 +121,15 @@ export default function Footer() {
           </nav>
           <p>&copy; 2026 {BRAND.legalName}. All rights reserved.</p>
           <p>
-            Made by <strong>Bhaswanth Vommena</strong>
+            Made by{" "}
+            <a
+              href="https://bhaswanthvommena.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-credit__link"
+            >
+              Bhaswanth Vommena
+            </a>
           </p>
         </div>
       </div>

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CheckSquare, Zap, Settings, BarChart2, ArrowRight } from "lucide-react";
 import { PUBLIC_ASSETS, SITE_URL } from "../../lib/siteConfig";
-import { buildCanonical, buildPageMetadata } from "../../lib/seoConfig";
+import { buildCanonical, buildPageMetadata, routeOgImage } from "../../lib/seoConfig";
 import { buildServiceSchema } from "../../lib/citySchema";
 import { FinalCta } from "../../components/sections";
 import ContentImage from "../../components/common/ContentImage";
@@ -12,6 +12,7 @@ export const metadata: Metadata = buildPageMetadata({
   description:
     "MW-scale industrial solar for factories in Nellore, Tirupati, Kadapa and Ongole. Grid synchronization, 40% depreciation and zero-downtime commissioning.",
   path: "/services/industrial",
+  images: [routeOgImage("/services/industrial", "Industrial Solar EPC | ELRIX ENERGY")],
 });
 
 const serviceSchema = buildServiceSchema({

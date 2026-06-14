@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { MapPin, Sun, ShieldCheck, IndianRupee, Wrench, Phone, ArrowRight } from "lucide-react";
+import { MapPin, Sun, ShieldCheck, IndianRupee, Wrench, Phone, ArrowRight, BookOpen } from "lucide-react";
 import Reveal from "../common/Reveal";
 import HeroBackground from "../common/HeroBackground";
 import WhySectionContent from "../city/WhySectionContent";
@@ -10,6 +11,8 @@ import { HeroCta, TrustStrip } from "../sections";
 import { Card } from "../ui";
 import type { CityPageData } from "@/app/lib/cityData";
 import { getOtherCities } from "@/app/lib/cityData";
+import { getBlogArticlesForCity } from "@/app/lib/blogCityLinks";
+import { estimateReadingTimeMinutes, formatReadingTime } from "@/app/lib/blogUtils";
 import { CONTACT, WHATSAPP } from "@/app/lib/siteConfig";
 import styles from "./CityLanding.module.css";
 
@@ -32,6 +35,7 @@ const CityLanding = ({ data }: CityLandingProps) => {
   const { city, state, tagline, intro, whySection, uniquePoints, services, faqs } = data;
   const [openFaq, setOpenFaq] = React.useState<number | null>(null);
   const otherCities = getOtherCities(data.slug);
+  const relatedArticles = getBlogArticlesForCity(data.slug, 3);
 
   return (
     <div className={styles.page}>
@@ -173,6 +177,57 @@ const CityLanding = ({ data }: CityLandingProps) => {
       <section className="section bg-white">
         <div className="container">
           <Reveal>
+            <div className={styles.cityBlogHeader}>
+              <h2 className="text-center mb-3">Solar Guides for {city}</h2>
+              <p className={`${styles.cityBlogIntro} text-center`}>
+                Local insights on PM Surya Ghar subsidy, system sizing, net metering, and costs —
+                written for {city} homeowners and businesses.
+              </p>
+            </div>
+            <div className={styles.cityBlogGrid}>
+              {relatedArticles.map((article, index) => (
+                <Reveal delay={index * 120} key={article.id}>
+                  <article className={styles.cityBlogCard}>
+                    <Link href={`/blog/${article.slug}`} className={styles.cityBlogCardMedia}>
+                      <Image
+                        src={article.image}
+                        alt={article.title}
+                        width={640}
+                        height={360}
+                        sizes="(max-width: 768px) 100vw, 320px"
+                        className={styles.cityBlogCardImage}
+                      />
+                    </Link>
+                    <div className={styles.cityBlogCardBody}>
+                      <p className={styles.cityBlogCardMeta}>
+                        {article.date} •{" "}
+                        {formatReadingTime(estimateReadingTimeMinutes(article.content))}
+                      </p>
+                      <h3>
+                        <Link href={`/blog/${article.slug}`}>{article.title}</Link>
+                      </h3>
+                      <p>{article.summary}</p>
+                      <Link href={`/blog/${article.slug}`} className={styles.cityBlogCardLink}>
+                        Read article <ArrowRight size={16} aria-hidden="true" />
+                      </Link>
+                    </div>
+                  </article>
+                </Reveal>
+              ))}
+            </div>
+            <div className={styles.cityBlogFooter}>
+              <Link href="/blog" className="btn btn-outline">
+                <BookOpen size={18} aria-hidden="true" />
+                View all solar guides
+              </Link>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="section bg-background">
+        <div className="container">
+          <Reveal>
             <h2 className="text-center mb-3">Solar FAQs for {city} Homeowners</h2>
             <div className={styles.cityFaqList}>
               {faqs.map((faq, index) => (
@@ -196,9 +251,13 @@ const CityLanding = ({ data }: CityLandingProps) => {
                       {openFaq === index ? "−" : "+"}
                     </span>
                   </div>
-                  {openFaq === index && (
+                  <div
+                    className={`${styles.cityFaqItemAnswerWrap} ${
+                      openFaq === index ? styles.cityFaqItemAnswerWrapOpen : ""
+                    }`}
+                  >
                     <p className={styles.cityFaqItemAnswer}>{faq.a}</p>
-                  )}
+                  </div>
                 </div>
               ))}
             </div>

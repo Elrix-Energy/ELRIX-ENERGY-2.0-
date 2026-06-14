@@ -20,10 +20,10 @@ const Blog = () => {
             {blogArticles.map((article, index) => (
               <Reveal delay={index * 150} key={article.id}>
                 <article className="blog-card">
-                  <Link href={`/blog/${article.id}`} className="blog-card__media">
+                  <Link href={`/blog/${article.slug}`} className="blog-card__media">
                     <Image
                       src={article.image}
-                      alt=""
+                      alt={article.title}
                       width={640}
                       height={360}
                       sizes="(max-width: 768px) 100vw, 320px"
@@ -35,10 +35,10 @@ const Blog = () => {
                       {article.date} • {formatReadingTime(estimateReadingTimeMinutes(article.content))} • {article.author}
                     </p>
                     <h2 className="blog-card-title">
-                      <Link href={`/blog/${article.id}`}>{article.title}</Link>
+                      <Link href={`/blog/${article.slug}`}>{article.title}</Link>
                     </h2>
                     <p className="blog-card-excerpt">{article.summary}</p>
-                    <Link href={`/blog/${article.id}`} className="text-primary blog-read-link">
+                    <Link href={`/blog/${article.slug}`} className="text-primary blog-read-link">
                       Read Full Article &rarr;
                     </Link>
                   </div>

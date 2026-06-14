@@ -3,8 +3,26 @@
  * Import from here instead of hardcoding values in components.
  */
 
-export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://elrixenergy.com';
+/** Canonical apex URL — always https://elrixenergy.com (no www, no trailing slash). */
+export function normalizeSiteUrl(raw?: string): string {
+  const fallback = "https://elrixenergy.com";
+  const value = raw?.trim() || fallback;
+
+  try {
+    const url = new URL(value);
+    let hostname = url.hostname.toLowerCase();
+
+    if (hostname.startsWith("www.")) {
+      hostname = hostname.slice(4);
+    }
+
+    return `https://${hostname}`;
+  } catch {
+    return fallback;
+  }
+}
+
+export const SITE_URL = normalizeSiteUrl(process.env.NEXT_PUBLIC_SITE_URL);
 
 export const CONTACT = {
   phone: '+919640484677',

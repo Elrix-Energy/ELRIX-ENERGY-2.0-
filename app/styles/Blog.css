@@ -62,6 +62,7 @@
 
 .blog-card-excerpt {
   color: var(--text-light);
+  font-family: var(--font-body);
   margin-bottom: 2rem;
   flex-grow: 1;
   line-height: 1.7;
@@ -119,6 +120,7 @@
 }
 
 .blog-post-header h1 {
+  font-family: var(--font-heading);
   font-size: clamp(1.75rem, 3vw + 1rem, 3rem);
   line-height: 1.2;
   margin-bottom: 1rem;
@@ -146,12 +148,14 @@
 }
 
 .blog-toc__title {
+  font-family: var(--font-heading);
   font-size: var(--text-base);
   margin: 0 0 var(--space-4);
 }
 
 .blog-toc__list {
   display: grid;
+  font-family: var(--font-body);
   gap: var(--space-2);
   list-style: none;
   margin: 0;
@@ -185,13 +189,190 @@
 }
 
 .article-content {
-  font-size: 1.15rem;
-  line-height: 1.8;
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  line-height: 1.75;
+  color: var(--text-dark);
+  max-width: 100%;
+}
+
+/* Headings */
+.article-content h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.375rem, 2vw + 0.75rem, 1.875rem);
+  font-weight: 700;
+  line-height: 1.25;
+  margin: var(--space-10) 0 var(--space-4);
+  padding-top: var(--space-2);
+  scroll-margin-top: 6rem;
+  color: var(--primary);
+}
+
+.article-content h2:first-child {
+  margin-top: 0;
+}
+
+.article-content h3 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.0625rem, 1.25vw + 0.75rem, 1.25rem);
+  font-weight: 600;
+  line-height: 1.35;
+  margin: var(--space-8) 0 var(--space-3);
   color: var(--text-dark);
 }
 
-.article-content h2 {
-  scroll-margin-top: 6rem;
+.article-content h4 {
+  font-family: var(--font-heading);
+  font-size: var(--text-base);
+  font-weight: 600;
+  margin: var(--space-6) 0 var(--space-2);
+  color: var(--text-dark);
+}
+
+/* Body copy */
+.article-content p {
+  margin: 0 0 var(--space-5);
+  max-width: 100%;
+}
+
+.article-content strong {
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.article-content em {
+  color: var(--text-light);
+  font-style: italic;
+}
+
+/* Links */
+.article-content a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color var(--motion-fast) var(--ease-standard);
+}
+
+.article-content a:hover {
+  color: var(--primary-dark);
+}
+
+/* Lists — restore markers stripped by global ul reset */
+.article-content ul,
+.article-content ol {
+  margin: 0 0 var(--space-5);
+  padding-left: 1.625rem;
+  list-style-position: outside;
+}
+
+.article-content ul {
+  list-style-type: disc;
+}
+
+.article-content ol {
+  list-style-type: decimal;
+}
+
+.article-content li {
+  margin-bottom: var(--space-2);
+  padding-left: var(--space-1);
+}
+
+.article-content li:last-child {
+  margin-bottom: 0;
+}
+
+.article-content li::marker {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.article-content ul ul,
+.article-content ol ol,
+.article-content ul ol,
+.article-content ol ul {
+  margin-top: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+/* Ensure paragraphs after lists align with body copy, not list text indent */
+.article-content ol + p,
+.article-content ul + p {
+  margin-top: var(--space-4);
+  margin-left: 0;
+  padding-left: 0;
+}
+
+/* Tables */
+.article-table-wrap {
+  margin: var(--space-6) 0 var(--space-8);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid rgba(11, 31, 58, 0.08);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--elev-1);
+  background: var(--white);
+}
+
+.article-content .article-table {
+  width: 100%;
+  min-width: 36rem;
+  border-collapse: collapse;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.article-content .article-table th,
+.article-content .article-table td {
+  padding: 0.875rem 1rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid rgba(11, 31, 58, 0.08);
+}
+
+.article-content .article-table th {
+  background: var(--primary);
+  color: var(--white);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.article-content .article-table tbody tr:nth-child(even) td,
+.article-content .article-table > tr:nth-child(even) td {
+  background: var(--color-surface-2);
+}
+
+.article-content .article-table tbody tr:hover td,
+.article-content .article-table > tr:hover td {
+  background: var(--color-brand-50);
+}
+
+.article-content .article-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.article-content .article-table td:first-child {
+  font-weight: 500;
+  color: var(--text-dark);
+}
+
+/* FAQ answers — only in the FAQ section */
+.article-content h2[id*="frequently-asked-questions"] ~ h3 {
+  margin-top: var(--space-6);
+  font-size: var(--text-base);
+}
+
+.article-content h2[id*="frequently-asked-questions"] ~ h3 + p {
+  margin-bottom: var(--space-6);
+  padding-left: var(--space-4);
+  border-left: 3px solid var(--color-brand-100);
+  color: var(--color-ink-600);
 }
 
 .article-cta-banner {
@@ -204,12 +385,14 @@
 }
 
 .article-cta-banner h2 {
+  font-family: var(--font-heading);
   font-size: 2rem;
   margin-bottom: 1rem;
   color: white;
 }
 
 .article-cta-banner p {
+  font-family: var(--font-body);
   margin-bottom: 2rem;
   opacity: 0.9;
 }
@@ -383,6 +566,12 @@
   font-weight: 700;
 }
 
+.pricing-table__badge {
+  color: var(--accent);
+  font-size: 0.85em;
+  margin-left: 0.35rem;
+}
+
 .financing-benefits {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -416,6 +605,20 @@
   }
   .blog-post-header h1 {
     font-size: 2rem;
+  }
+  .article-content {
+    font-size: var(--text-base);
+  }
+  .article-content h2 {
+    margin-top: var(--space-8);
+  }
+  .article-content .article-table {
+    min-width: 32rem;
+    font-size: 0.8125rem;
+  }
+  .article-content .article-table th,
+  .article-content .article-table td {
+    padding: 0.75rem 0.625rem;
   }
   .financing-benefits {
     grid-template-columns: 1fr 1fr;

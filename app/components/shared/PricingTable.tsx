@@ -8,9 +8,18 @@ interface PricingTableProps {
 
 export default function PricingTable({
   title = "Estimated System Costs in Andhra Pradesh (2026)",
-  subtitle = "Net cost after PM Surya Ghar subsidy. Actual prices may vary based on site conditions.",
+  subtitle = "Transparent pricing with ELRIX discount and PM Surya Ghar subsidy applied.",
   className = "",
 }: PricingTableProps) {
+  const headings = [
+    "System Size",
+    "Gross Cost",
+    "ELRIX Discount",
+    "Customer Price",
+    "Subsidy",
+    "Net Cost (Est.)",
+  ];
+
   return (
     <div className={className}>
       <h2 className="text-center mb-1">{title}</h2>
@@ -19,23 +28,32 @@ export default function PricingTable({
         <table className="pricing-table">
           <thead>
             <tr>
-              {["System Size", "Gross Cost", "Subsidy", "Net Cost (Est.)", "Approx. ROI"].map(
-                (heading) => (
-                  <th key={heading} scope="col">
-                    {heading}
-                  </th>
-                ),
-              )}
+              {headings.map((heading) => (
+                <th key={heading} scope="col">
+                  {heading}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>
             {RESIDENTIAL_PRICING_ROWS.map((row) => (
-              <tr key={row.systemSize}>
-                <td>{row.systemSize}</td>
+              <tr
+                key={row.systemSize}
+                className={row.highlighted ? "highlight-row" : undefined}
+              >
+                <td>
+                  {row.systemSize}
+                  {row.highlighted ? (
+                    <span className="pricing-table__badge" aria-label="Most popular size">
+                      ★
+                    </span>
+                  ) : null}
+                </td>
                 <td>{row.grossCost}</td>
+                <td>{row.elrixDiscount}</td>
+                <td>{row.customerPrice}</td>
                 <td>{row.subsidy}</td>
                 <td className="subsidy-price">{row.netCost}</td>
-                <td>{row.roi}</td>
               </tr>
             ))}
           </tbody>

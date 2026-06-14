@@ -2,6 +2,8 @@
  * Blog posts — keep in TypeScript until Sanity CMS is connected (see app/data/README.md).
  */
 
+import { newBlogArticles } from './newBlogArticles';
+
 export interface BlogArticle {
   /** URL slug — used as the dynamic route segment `/blog/[id]` */
   id: string;
@@ -16,8 +18,6 @@ export interface BlogArticle {
   /** ISO 8601 last-updated date for JSON-LD `dateModified` */
   modifiedDate: string;
   author: string;
-  /** Unsplash (or other) credit line shown under the hero image */
-  imageCredit?: string;
   /** Short summary shown on the blog listing card */
   summary: string;
   /** SEO meta description (≤ 160 chars) */
@@ -45,7 +45,6 @@ export const blogArticles: BlogArticle[] = [
     summary: 'With over 300 sunny days a year, Nellore and Ongole are perfectly positioned to lead the state in renewable energy. Discover why local homeowners are switching faster than ever.',
     description: 'Why Nellore and Ongole lead Andhra Pradesh in solar adoption — 300 sunny days, local EPC advantage, and fast net metering approvals. Learn how ELRIX ENERGY powers this shift.',
     image: '/blog/nellore-solar-capital.webp',
-    imageCredit: 'Photo: Andreas Gücklund / Unsplash',
     keywords: ['solar company Nellore', 'solar company Ongole', 'rooftop solar Nellore', 'solar panels Andhra Pradesh', 'net metering Nellore', 'ELRIX ENERGY Nellore'],
     content: `
       <h2>The Clear Advantage of Nellore's Climate</h2>
@@ -70,7 +69,6 @@ export const blogArticles: BlogArticle[] = [
     summary: 'Confused by the PM Surya Ghar scheme? We break down exactly how much subsidy you are owed and how ELRIX ENERGY secures it for you across Kadapa and Tirupati.',
     description: 'Complete guide to the PM Surya Ghar Muft Bijli Yojana subsidy for Tirupati and Kadapa residents — subsidy tiers, eligibility, and how ELRIX ENERGY handles 100% of the paperwork.',
     image: '/blog/pm-surya-ghar-tirupati-kadapa.webp',
-    imageCredit: 'Photo: R ARCHITECTURE / Unsplash',
     keywords: ['PM Surya Ghar subsidy Tirupati', 'PM Surya Ghar Kadapa', 'solar subsidy Andhra Pradesh 2026', 'ELRIX ENERGY Tirupati', 'rooftop solar subsidy India', '₹78000 solar subsidy'],
     content: `
       <h2>Demystifying the Subsidy</h2>
@@ -95,7 +93,6 @@ export const blogArticles: BlogArticle[] = [
     summary: 'For MSMEs and massive industrial complexes in Nellore, energy overhead is the biggest threat to margins. See how commercial PV arrays drive instant profitability.',
     description: 'How commercial and industrial businesses in Nellore cut energy costs by 60–80% with rooftop solar — including the 40% accelerated depreciation tax benefit under Section 32.',
     image: '/blog/commercial-solar-epc-nellore.webp',
-    imageCredit: 'Photo: Science in HD / Unsplash',
     keywords: ['commercial solar Nellore', 'industrial solar EPC Andhra Pradesh', 'accelerated depreciation solar', 'Section 32 solar India', 'MSME solar Nellore', 'solar ROI commercial India'],
     content: `
       <h2>The MSME Energy Crisis</h2>
@@ -120,23 +117,22 @@ export const blogArticles: BlogArticle[] = [
     summary: 'Wondering how much solar costs in Andhra Pradesh in 2026? We break down residential system prices before and after PM Surya Ghar subsidy, inverter costs, and real ROI figures for Nellore, Tirupati, Kadapa and Ongole.',
     description: 'Solar panel cost in Andhra Pradesh 2026: complete price table for 1kW–10kW systems before and after PM Surya Ghar subsidy, with real ROI timelines for Nellore, Tirupati, Kadapa and Ongole.',
     image: '/blog/solar-panel-cost-andhra-pradesh-2026.webp',
-    imageCredit: 'Photo: American Public Power Association / Unsplash',
     keywords: ['solar panel cost Andhra Pradesh 2026', 'solar price Nellore', 'solar cost Tirupati', '1kW solar cost India 2026', '3kW solar cost after subsidy', 'solar ROI Andhra Pradesh'],
     content: `
       <h2>What Does a Solar System Actually Cost in AP?</h2>
-      <p>One of the biggest myths in the solar industry is that rooftop solar is too expensive. In <strong>Andhra Pradesh</strong> in 2026, a complete Tier-1 residential solar system costs approximately <strong>₹55,000–₹65,000 per kW</strong> before subsidy. After applying the PM Surya Ghar government subsidy, your net cost drops dramatically.</p>
+      <p>One of the biggest myths in the solar industry is that rooftop solar is too expensive. In <strong>Andhra Pradesh</strong> in 2026, a complete Tier-1 residential solar system costs approximately <strong>ELRIX ENERGY tier pricing from ₹67,000 for 1 kW (after discount)</strong> before subsidy. After applying the PM Surya Ghar government subsidy, your net cost drops dramatically.</p>
       <h2>Realistic Price Table (After Subsidy)</h2>
       <p>Here is a clear breakdown for common residential system sizes in Nellore, Tirupati, Kadapa, and Ongole:</p>
       <ul>
-        <li><strong>1 kW system:</strong> Gross ₹65,000 → Subsidy ₹30,000 → Net cost ≈ ₹35,000</li>
-        <li><strong>2 kW system:</strong> Gross ₹1,30,000 → Subsidy ₹60,000 → Net cost ≈ ₹70,000</li>
-        <li><strong>3 kW system:</strong> Gross ₹1,70,000 → Subsidy ₹78,000 → Net cost ≈ ₹92,000</li>
-        <li><strong>5 kW system:</strong> Gross ₹2,70,000 → Subsidy ₹78,000 → Net cost ≈ ₹1,92,000</li>
+        <li><strong>1 kW system:</strong> Customer price ₹67,000 → Subsidy ₹30,000 → Net cost ≈ ₹37,000</li>
+        <li><strong>2 kW system:</strong> Customer price ₹1,35,000 → Subsidy ₹60,000 → Net cost ≈ ₹75,000</li>
+        <li><strong>3 kW system:</strong> Customer price ₹2,00,000 → Subsidy ₹78,000 → Net cost ≈ ₹1,22,000</li>
+        <li><strong>5 kW system:</strong> Customer price ₹3,34,000 → Subsidy ₹78,000 → Net cost ≈ ₹2,56,000</li>
       </ul>
       <h2>What Is Included in the Price?</h2>
       <p>A complete EPC package from <strong>ELRIX ENERGY</strong> includes ALMM-listed Tier-1 solar panels, a premium string inverter, heavy-duty HDGI mounting structure (cyclone-rated for coastal AP), all wiring, DC protection, AC distribution board, installation labour, and net metering application fees.</p>
       <h2>ROI: When Does Solar Pay for Itself?</h2>
-      <p>Based on current APSPDCL tariffs in Nellore (approximately ₹6–₹8 per unit), a 3 kW system generating around 360 units per month saves approximately ₹2,500–₹3,000 per month. At that rate, a net investment of ₹92,000 (after subsidy) pays off fully in approximately <strong>30–37 months</strong> — after which your electricity is free for 22+ more years.</p>
+      <p>Based on current APSPDCL tariffs in Nellore (approximately ₹6–₹8 per unit), a 3 kW system generating around 360 units per month saves approximately ₹2,500–₹3,000 per month. At that rate, a net investment of ₹1,22,000 (after subsidy) pays off fully in approximately <strong>40–50 months</strong> — after which your electricity is free for 22+ more years.</p>
     `,
     ctaText: 'Get an Exact Quote for Your Home in AP',
     ctaSubtext: 'Free roof analysis and detailed BOQ within 24 hours for Nellore, Tirupati, Kadapa & Ongole.',
@@ -153,7 +149,6 @@ export const blogArticles: BlogArticle[] = [
     summary: 'Should you install a standard on-grid system or invest in a hybrid system with batteries? We compare costs, benefits, and the right choice for homes in Nellore, Tirupati, Kadapa and Ongole based on local grid reliability.',
     description: 'On-grid vs hybrid solar system comparison for Andhra Pradesh homes — costs, battery backup benefits, net metering, and the right choice for Nellore, Tirupati, Kadapa and Ongole based on local grid conditions.',
     image: '/blog/on-grid-vs-hybrid-solar-andhra-pradesh.webp',
-    imageCredit: 'Photo: Vivint Solar / Unsplash',
     keywords: ['on-grid vs hybrid solar India', 'hybrid solar system Andhra Pradesh', 'solar with battery backup Nellore', 'net metering vs hybrid', 'best solar system Tirupati', 'grid-tied solar Kadapa Ongole'],
     content: `
       <h2>Understanding On-Grid Solar Systems</h2>
@@ -165,7 +160,7 @@ export const blogArticles: BlogArticle[] = [
       <h2>Cost Comparison for AP Homeowners</h2>
       <p>For a 3 kW residential system in Nellore:</p>
       <ul>
-        <li><strong>On-Grid:</strong> Net cost after subsidy ≈ ₹92,000. ROI in 30–37 months.</li>
+        <li><strong>On-Grid:</strong> Net cost after subsidy ≈ ₹1,22,000. ROI in 40–50 months.</li>
         <li><strong>Hybrid (with 5 kWh battery):</strong> Net cost ≈ ₹1,80,000–₹2,20,000. ROI in 48–60 months but provides full energy independence.</li>
       </ul>
       <h2>Our Recommendation</h2>
@@ -174,4 +169,5 @@ export const blogArticles: BlogArticle[] = [
     ctaText: 'Not Sure Which System is Right for You?',
     ctaSubtext: 'Our engineers will assess your local grid conditions and energy needs and recommend the perfect solution for free.',
   },
+  ...newBlogArticles,
 ];

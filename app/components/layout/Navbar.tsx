@@ -151,6 +151,10 @@ export default function Navbar() {
             </div>
           </div>
 
+          <Link href="/projects" className={pathname === "/projects" ? "active-link" : ""}>
+            Projects
+          </Link>
+
           <Link href="/subsidy" className={pathname === "/subsidy" ? "active-link" : ""}>
             Subsidy & EMI
           </Link>

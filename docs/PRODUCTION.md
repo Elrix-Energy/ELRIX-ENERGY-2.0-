@@ -10,7 +10,7 @@ Copy `.env.example` to `.env.local` (local) and configure in Vercel (production)
 
 
 
-- `NEXT_PUBLIC_SITE_URL` — canonical site URL
+- `NEXT_PUBLIC_SITE_URL` — canonical apex URL: `https://elrixenergy.com` (no `www`, no trailing slash). Set this in Vercel production env. `www.elrixenergy.com` permanently redirects to the apex domain.
 
 - `NEXT_PUBLIC_GA_ID` — Google Analytics 4 (optional; gated by cookie consent)
 
@@ -18,13 +18,16 @@ Copy `.env.example` to `.env.local` (local) and configure in Vercel (production)
 
 
 
-## Contact form (FormSubmit)
+## Contact form (FormSubmit + reCAPTCHA v3)
 
+Inquiries post to `/api/contact`, which verifies **Google reCAPTCHA v3**, applies rate limiting, then forwards to [FormSubmit](https://formsubmit.co) → `elrixenergy@gmail.com`.
 
+**Required in production:**
 
-Inquiries post to [FormSubmit](https://formsubmit.co) and are delivered to `elrixenergy@gmail.com` (see `CONTACT.email` in `app/lib/siteConfig.ts`).
+- `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` — reCAPTCHA v3 site key ([admin console](https://www.google.com/recaptcha/admin))
+- `RECAPTCHA_SECRET_KEY` — matching secret key (server-only)
 
-
+Add your domain(s) when creating the reCAPTCHA key. Without both keys, captcha verification is skipped (local dev only — set keys before go-live).
 
 On first deploy, submit a test inquiry and **confirm the activation email** from FormSubmit if prompted.
 

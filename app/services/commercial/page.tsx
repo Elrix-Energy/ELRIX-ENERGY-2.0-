@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CheckSquare, TrendingUp, Shield, Zap, ArrowRight } from "lucide-react";
 import { PUBLIC_ASSETS, SITE_URL } from "../../lib/siteConfig";
-import { buildCanonical, buildPageMetadata } from "../../lib/seoConfig";
+import { buildCanonical, buildPageMetadata, routeOgImage } from "../../lib/seoConfig";
 import { buildServiceSchema } from "../../lib/citySchema";
 import { FinalCta } from "../../components/sections";
 import ContentImage from "../../components/common/ContentImage";
@@ -12,6 +12,7 @@ export const metadata: Metadata = buildPageMetadata({
   description:
     "10kW–500kW+ commercial solar EPC in Nellore, Tirupati, Kadapa and Ongole. 40% accelerated depreciation, load analysis and MNRE-certified installation.",
   path: "/services/commercial",
+  images: [routeOgImage("/services/commercial", "Commercial Solar Installation | ELRIX ENERGY")],
 });
 
 const serviceSchema = buildServiceSchema({

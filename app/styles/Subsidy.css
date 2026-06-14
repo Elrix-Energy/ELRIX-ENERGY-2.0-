@@ -2,6 +2,13 @@
   margin-bottom: 0;
 }
 
+.emi-calculator-skeleton {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-surface-3);
+  border-radius: var(--radius-xl);
+  min-height: 280px;
+}
+
 .subsidy-subtitle {
   font-size: 1rem;
   color: var(--primary-light);

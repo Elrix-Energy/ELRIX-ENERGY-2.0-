@@ -1,24 +1,29 @@
-import Badge from "../ui/Badge";
-import { CERTIFICATIONS } from "@/app/lib/siteConfig";
+import { trustMetrics, type TrustMetric } from "@/app/data/trustMetrics";
 
 interface TrustStripProps {
-  items?: string[];
+  metrics?: TrustMetric[];
   className?: string;
 }
 
 export default function TrustStrip({
-  items = CERTIFICATIONS.map((cert) => cert.label),
+  metrics = trustMetrics,
   className = "",
 }: TrustStripProps) {
   return (
-    <div className={`trust-strip trust-strip--shared ${className}`.trim()}>
+    <section
+      className={`trust-strip trust-strip--shared ${className}`.trim()}
+      aria-label="Company highlights"
+    >
       <div className="container trust-strip-inner">
-        {items.map((item) => (
-          <Badge key={item} variant="brand" className="trust-strip__item">
-            ✓ {item}
-          </Badge>
-        ))}
+        <ul className="trust-strip__list">
+          {metrics.map((metric) => (
+            <li key={metric.id} className="trust-strip__stat">
+              <span className="trust-strip__value">{metric.value}</span>
+              <span className="trust-strip__label">{metric.label}</span>
+            </li>
+          ))}
+        </ul>
       </div>
-    </div>
+    </section>
   );
 }

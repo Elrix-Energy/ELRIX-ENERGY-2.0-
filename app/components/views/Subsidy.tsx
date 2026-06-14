@@ -1,11 +1,17 @@
 "use client";
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { FileText, Settings, Wallet, CreditCard, IndianRupee, ShieldCheck, Clock } from 'lucide-react';
+import { FileText, Settings, Wallet, CreditCard, IndianRupee, ShieldCheck, Clock, ChevronDown, ChevronUp } from 'lucide-react';
 import Reveal from '../common/Reveal';
-import { EmiCalculator, FinalCta, PageHeader } from '../sections';
+import { FinalCta, PageHeader } from '../sections';
 import { Card } from '../ui';
+import { subsidyFaqs } from '@/app/data/subsidyFaqs';
 import { PM_SURYA_GHAR_SLABS } from '@/app/data/pricingData';
+
+const EmiCalculator = dynamic(() => import('../sections/EmiCalculator'), {
+  loading: () => <div className="emi-calculator-skeleton" aria-hidden="true" />,
+});
 
 type YesNo = 'yes' | 'no';
 
@@ -14,6 +20,11 @@ const Subsidy = () => {
   const [q1, setQ1] = useState<YesNo | null>(null);
   const [q2, setQ2] = useState<YesNo | null>(null);
   const [q3, setQ3] = useState<YesNo | null>(null);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  const toggleFaq = (index: number) => {
+    setOpenFaq(openFaq === index ? null : index);
+  };
 
   return (
     <div className="subsidy-page">
@@ -213,6 +224,45 @@ const Subsidy = () => {
               </Card>
             </Reveal>
           </div>
+        </div>
+      </section>
+
+      {/* Subsidy FAQs */}
+      <section className="section bg-white">
+        <div className="container">
+          <Reveal>
+            <h2 className="text-center mb-3">PM Surya Ghar FAQs</h2>
+            <div className="faq-container">
+              {subsidyFaqs.map((faq, index) => (
+                <div
+                  key={faq.q}
+                  className={`faq-item ${openFaq === index ? "active" : ""}`}
+                  onClick={() => toggleFaq(index)}
+                  role="button"
+                  tabIndex={0}
+                  aria-expanded={openFaq === index}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      toggleFaq(index);
+                    }
+                  }}
+                >
+                  <div className="faq-item__header">
+                    <h3>{faq.q}</h3>
+                    {openFaq === index ? (
+                      <ChevronUp size={20} className="text-primary" aria-hidden="true" />
+                    ) : (
+                      <ChevronDown size={20} className="text-light" aria-hidden="true" />
+                    )}
+                  </div>
+                  <div className="faq-item__answer-wrap">
+                    <p className="faq-item__answer">{faq.a}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Reveal>
         </div>
       </section>
 

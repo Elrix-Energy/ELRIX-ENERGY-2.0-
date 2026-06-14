@@ -11,6 +11,7 @@ import ScrollManager from "./components/common/ScrollManager";
 import { BRAND, CONTACT, SITE_URL, SOCIAL } from "./lib/siteConfig";
 import {
   buildAlternates,
+  buildOrganizationSchema,
   DEFAULT_OG_IMAGE,
   PAGE_TITLE_TEMPLATE,
   ROOT_METADATA,
@@ -72,56 +73,61 @@ export const viewport: Viewport = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const jsonLd = [
-    {
-      "@context": "https://schema.org",
-      "@type": "HomeAndConstructionBusiness",
-      name: BRAND.legalName,
-      image: `${SITE_URL}${BRAND.logoPath}`,
-      description:
-        "Top-rated solar EPC company in Nellore serving Tirupati, Kadapa and Ongole. Residential, commercial and industrial solar installations with PM Surya Ghar subsidy support.",
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: "Vedayapalem",
-        addressLocality: "Nellore",
-        addressRegion: "Andhra Pradesh",
-        postalCode: "524004",
-        addressCountry: "IN",
-      },
-      geo: {
-        "@type": "GeoCoordinates",
-        latitude: 14.4286,
-        longitude: 79.9825,
-      },
-      url: SITE_URL,
-      telephone: CONTACT.phone,
-      email: CONTACT.email,
-      priceRange: "₹₹",
-      openingHoursSpecification: {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-        opens: "09:00",
-        closes: "18:00",
-      },
-      areaServed: [
-        { "@type": "City", name: "Nellore" },
-        { "@type": "City", name: "Tirupati" },
-        { "@type": "City", name: "Kadapa" },
-        { "@type": "City", name: "Ongole" },
-      ],
-      hasOfferCatalog: {
-        "@type": "OfferCatalog",
-        name: "Solar EPC Services",
-        itemListElement: [
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Residential Solar Installation" } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Commercial Solar Installation" } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Industrial Solar EPC" } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Solar Maintenance & AMC" } },
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      buildOrganizationSchema(),
+      {
+        "@type": "HomeAndConstructionBusiness",
+        "@id": `${SITE_URL}/#business`,
+        name: BRAND.legalName,
+        image: `${SITE_URL}${BRAND.logoPath}`,
+        description:
+          "Top-rated solar EPC company in Nellore serving Tirupati, Kadapa and Ongole. Residential, commercial and industrial solar installations with PM Surya Ghar subsidy support.",
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "Vedayapalem",
+          addressLocality: "Nellore",
+          addressRegion: "Andhra Pradesh",
+          postalCode: "524004",
+          addressCountry: "IN",
+        },
+        geo: {
+          "@type": "GeoCoordinates",
+          latitude: 14.4286,
+          longitude: 79.9825,
+        },
+        url: SITE_URL,
+        telephone: CONTACT.phone,
+        email: CONTACT.email,
+        priceRange: "₹₹",
+        openingHoursSpecification: {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          opens: "09:00",
+          closes: "18:00",
+        },
+        areaServed: [
+          { "@type": "City", name: "Nellore" },
+          { "@type": "City", name: "Tirupati" },
+          { "@type": "City", name: "Kadapa" },
+          { "@type": "City", name: "Ongole" },
         ],
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: "Solar EPC Services",
+          itemListElement: [
+            { "@type": "Offer", itemOffered: { "@type": "Service", name: "Residential Solar Installation" } },
+            { "@type": "Offer", itemOffered: { "@type": "Service", name: "Commercial Solar Installation" } },
+            { "@type": "Offer", itemOffered: { "@type": "Service", name: "Industrial Solar EPC" } },
+            { "@type": "Offer", itemOffered: { "@type": "Service", name: "Solar Maintenance & AMC" } },
+          ],
+        },
+        sameAs: [SOCIAL.facebook, SOCIAL.instagram],
+        parentOrganization: { "@id": `${SITE_URL}/#organization` },
       },
-      sameAs: [SOCIAL.facebook, SOCIAL.instagram],
-    },
-  ];
+    ],
+  };
 
   return (
     <html lang="en-IN">

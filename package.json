@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint .",
     "optimize:images": "node scripts/optimize-public-images.mjs",
+    "download:blog-heroes": "node scripts/download-blog-hero-images.mjs",
     "import:certifications": "node scripts/import-certifications.mjs",
     "preview": "next start"
   },

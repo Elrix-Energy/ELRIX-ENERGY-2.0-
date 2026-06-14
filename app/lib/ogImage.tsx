@@ -3,25 +3,33 @@ import { BRAND } from "./siteConfig";
 
 export const OG_SIZE = { width: 1200, height: 630 } as const;
 
-type OgVariant = "home" | "city";
+type OgVariant = "home" | "city" | "page";
 
 interface OgImageOptions {
   variant: OgVariant;
   city?: string;
   tagline?: string;
+  title?: string;
+  subtitle?: string;
 }
 
-/** Branded 1200×630 Open Graph image (home + city landing pages). */
-export function createOgImage({ variant, city, tagline }: OgImageOptions) {
-  const title =
+/** Branded 1200×630 Open Graph image (home, city, and inner routes). */
+export function createOgImage({ variant, city, tagline, title, subtitle }: OgImageOptions) {
+  const displayTitle =
     variant === "home"
       ? BRAND.name
-      : `Solar Company in ${city}`;
+      : variant === "city"
+        ? `Solar Company in ${city}`
+        : (title ?? BRAND.name);
 
-  const subtitle =
+  const displaySubtitle =
     variant === "home"
       ? "Premium Solar EPC · Nellore · Tirupati · Kadapa · Ongole"
-      : (tagline ?? "MNRE Certified · PM Surya Ghar Subsidy up to ₹78,000");
+      : variant === "city"
+        ? (tagline ?? "MNRE Certified · PM Surya Ghar Subsidy up to Rs. 78,000")
+        : (subtitle ?? "MNRE Certified · APSPDCL Empanelled · Andhra Pradesh");
+
+  const titleSize = variant === "page" ? "52px" : variant === "home" ? "64px" : "56px";
 
   return new ImageResponse(
     (
@@ -61,10 +69,12 @@ export function createOgImage({ variant, city, tagline }: OgImageOptions) {
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "20px", maxWidth: "900px" }}>
-          <div style={{ fontSize: variant === "home" ? "64px" : "56px", fontWeight: 800, lineHeight: 1.1 }}>
-            {title}
+          <div style={{ fontSize: titleSize, fontWeight: 800, lineHeight: 1.1 }}>
+            {displayTitle}
           </div>
-          <div style={{ fontSize: "28px", color: "#E2E8F0", lineHeight: 1.4 }}>{subtitle}</div>
+          <div style={{ fontSize: "28px", color: "#E2E8F0", lineHeight: 1.4 }}>
+            {displaySubtitle}
+          </div>
         </div>
 
         <div
@@ -82,12 +92,21 @@ export function createOgImage({ variant, city, tagline }: OgImageOptions) {
         </div>
       </div>
     ),
-    OG_SIZE
+    OG_SIZE,
   );
+}
+
+export function createPageOgImage(title: string, subtitle: string) {
+  return createOgImage({ variant: "page", title, subtitle });
 }
 
 export function cityOgImagePath(slug: string): string {
   return `/solar-company-${slug}/opengraph-image`;
+}
+
+export function routeOgImagePath(path: string): string {
+  const normalized = path.startsWith("/") ? path : `/${path}`;
+  return `${normalized}/opengraph-image`;
 }
 
 export const HOME_OG_IMAGE_PATH = "/opengraph-image";

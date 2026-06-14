@@ -1,6 +1,5 @@
 import { BRAND, CONTACT, SITE_URL } from "./siteConfig";
 import { buildCanonical, buildOrganizationSchema } from "./seoConfig";
-import type { CityFaq } from "./cityData";
 
 const HQ_GEO = { latitude: 14.4286, longitude: 79.9825 };
 
@@ -32,7 +31,7 @@ export function buildNelloreLocalBusinessSchema() {
       longitude: HQ_GEO.longitude,
     },
     areaServed: { "@type": "City", name: "Nellore" },
-    parentOrganization: buildOrganizationSchema(),
+    parentOrganization: { "@id": `${SITE_URL}/#organization` },
   };
 }
 
@@ -61,24 +60,11 @@ export function buildAreaServedLocalBusinessSchema(
         name: "Andhra Pradesh",
       },
     },
-    parentOrganization: buildOrganizationSchema(),
+    parentOrganization: { "@id": `${SITE_URL}/#organization` },
   };
 }
 
-export function buildFaqPageSchema(faqs: CityFaq[]) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.q,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: faq.a,
-      },
-    })),
-  };
-}
+export { buildFaqPageSchema } from "./seoConfig";
 
 export function buildServiceSchema(options: {
   name: string;
@@ -92,7 +78,7 @@ export function buildServiceSchema(options: {
     name: options.name,
     description: options.description,
     serviceType: options.serviceType,
-    provider: buildOrganizationSchema(),
+    provider: { "@id": `${SITE_URL}/#organization` },
     areaServed: [
       { "@type": "City", name: "Nellore" },
       { "@type": "City", name: "Tirupati" },

@@ -1,6 +1,5 @@
 /**
- * Project case studies — placeholder entries until final photos/copy are supplied.
- * Planned CMS: Sanity (see app/data/README.md).
+ * Project case studies — edit here until Sanity CMS is connected.
  */
 
 export type ProjectSegment = "Residential" | "Commercial" | "Industrial" | "Maintenance";
@@ -13,90 +12,76 @@ export interface ProjectCaseStudy {
   location: string;
   capacity: string;
   summary: string;
-  /** Path under /public — placeholder imagery until site photos are added */
-  image: string;
+  /** Path under /public — omit until site photos are available */
+  image?: string;
   highlights: string[];
-  /** When true, UI shows a “case study coming soon” badge */
-  isPlaceholder: boolean;
 }
 
 export const projectCaseStudies: ProjectCaseStudy[] = [
   {
-    id: "nellore-residential-5kw",
-    slug: "nellore-residential-5kw",
-    title: "5 kW Rooftop Home — Nellore",
+    id: "bv-nagar-nellore-3kw",
+    slug: "bv-nagar-nellore-3kw",
+    title: "3 kW On-Grid Residential — B V Nagar, Nellore",
     segment: "Residential",
-    location: "Nellore, Andhra Pradesh",
+    location: "B V Nagar, Nellore",
+    capacity: "3 kW on-grid",
+    summary:
+      "On-grid rooftop solar for a home in B V Nagar, Nellore — Tier-1 panels, APSPDCL net metering, and PM Surya Ghar subsidy support handled end-to-end.",
+    highlights: ["On-grid system", "PM Surya Ghar eligible", "APSPDCL net metering"],
+  },
+  {
+    id: "buchireddypalem-nellore-5kw",
+    slug: "buchireddypalem-nellore-5kw",
+    title: "5 kW On-Grid Residential — Buchireddypalem, Nellore",
+    segment: "Residential",
+    location: "Buchireddypalem, Nellore",
     capacity: "5 kW on-grid",
     summary:
-      "Placeholder case study: Tier-1 DCR panels, PM Surya Ghar subsidy filing, and APSPDCL net metering for a high-consumption home in Nellore.",
-    image: "/residential_solar.webp",
-    highlights: ["PM Surya Ghar subsidy", "Net metering", "Cyclone-rated mounting"],
-    isPlaceholder: true,
+      "5 kW on-grid residential installation in Buchireddypalem with cyclone-rated mounting and full DISCOM paperwork completed by the ELRIX Nellore team.",
+    highlights: ["5 kW on-grid", "Cyclone-rated mounting", "Full DISCOM paperwork"],
   },
   {
-    id: "nellore-commercial-50kw",
-    slug: "nellore-commercial-50kw",
-    title: "50 kW Commercial Rooftop — Nellore",
-    segment: "Commercial",
-    location: "Nellore, Andhra Pradesh",
-    capacity: "50 kW",
-    summary:
-      "Placeholder case study: OPEX reduction and accelerated depreciation planning for a commercial facility in Nellore district.",
-    image: "/commercial_solar.webp",
-    highlights: ["40% accelerated depreciation", "Load analysis", "Remote monitoring ready"],
-    isPlaceholder: true,
-  },
-  {
-    id: "kadapa-industrial-200kw",
-    slug: "kadapa-industrial-200kw",
-    title: "200 kW Industrial Plant — Kadapa",
+    id: "ak-nagar-nellore-5kw-industrial",
+    slug: "ak-nagar-nellore-5kw-industrial",
+    title: "5 kW On-Grid Industrial — AK Nagar, Nellore",
     segment: "Industrial",
-    location: "Kadapa, Andhra Pradesh",
-    capacity: "200 kW",
+    location: "AK Nagar, Nellore",
+    capacity: "5 kW on-grid",
     summary:
-      "Placeholder case study: Industrial rooftop EPC with grid synchronization and zero-downtime commissioning protocol.",
-    image: "/industrial_solar.webp",
-    highlights: ["HT/LT integration", "SCADA-ready", "Heavy-duty structures"],
-    isPlaceholder: true,
+      "5 kW on-grid industrial rooftop system in AK Nagar, Nellore — engineered for reliable daytime load offset and grid export through net metering.",
+    highlights: ["Industrial on-grid", "Net metering", "Load-optimised design"],
   },
   {
-    id: "tirupati-residential-3kw",
-    slug: "tirupati-residential-3kw",
-    title: "3 kW PM Surya Ghar Home — Tirupati",
+    id: "kota-tirupati-3kw",
+    slug: "kota-tirupati-3kw",
+    title: "3 kW On-Grid Residential — Kota, Tirupati",
     segment: "Residential",
-    location: "Tirupati, Andhra Pradesh",
-    capacity: "3 kW",
+    location: "Kota, Tirupati",
+    capacity: "3 kW on-grid",
     summary:
-      "Placeholder case study: Maximum ₹78,000 subsidy tier with full DISCOM paperwork handled by ELRIX ENERGY.",
-    image: "/residential_solar.webp",
-    highlights: ["₹78,000 subsidy tier", "7-day install target", "Tier-1 ALMM modules"],
-    isPlaceholder: true,
+      "3 kW on-grid home installation in Kota, Tirupati — subsidy documentation, rooftop survey, and commissioning delivered by ELRIX ENERGY.",
+    highlights: ["3 kW on-grid", "Tirupati installation", "Subsidy documentation"],
   },
   {
-    id: "ongole-commercial-30kw",
-    slug: "ongole-commercial-30kw",
-    title: "30 kW Coastal Commercial — Ongole",
-    segment: "Commercial",
-    location: "Ongole, Andhra Pradesh",
-    capacity: "30 kW",
+    id: "magunta-layout-nellore-6kw",
+    slug: "magunta-layout-nellore-6kw",
+    title: "6 kW On-Grid Residential — Magunta Layout, Nellore",
+    segment: "Residential",
+    location: "Magunta Layout, Nellore",
+    capacity: "6 kW on-grid",
     summary:
-      "Placeholder case study: Coastal wind-load structural design for a commercial rooftop near the Prakasam coast.",
-    image: "/commercial_solar.webp",
-    highlights: ["180 km/h structure rating", "Salt-mist resilient BOS", "Export metering"],
-    isPlaceholder: true,
+      "6 kW on-grid residential system in Magunta Layout, Nellore — sized for higher household consumption with Tier-1 modules and APSPDCL integration.",
+    highlights: ["6 kW on-grid", "Higher-load home", "Tier-1 modules"],
   },
   {
-    id: "nellore-amc-portfolio",
-    slug: "nellore-amc-portfolio",
-    title: "Annual Maintenance Portfolio — Nellore",
-    segment: "Maintenance",
-    location: "Nellore, Andhra Pradesh",
-    capacity: "Multi-site AMC",
+    id: "stonehousepeta-nellore-3kw",
+    slug: "stonehousepeta-nellore-3kw",
+    title: "3 kW On-Grid Residential — Stonehousepeta, Nellore",
+    segment: "Residential",
+    location: "Stonehousepeta, Nellore",
+    capacity: "3 kW on-grid",
     summary:
-      "Placeholder case study: Panel cleaning, inverter health checks, and performance reporting for installed systems across Nellore.",
-    image: "/solar_maintenance.webp",
-    highlights: ["Scheduled O&M", "Thermal imaging (annual)", "24/7 monitoring option"],
-    isPlaceholder: true,
+      "3 kW on-grid rooftop solar in Stonehousepeta, Nellore — compact residential deployment with net metering and post-install support from ELRIX ENERGY.",
+    highlights: ["3 kW on-grid", "Stonehousepeta, Nellore", "Post-install support"],
   },
 ];

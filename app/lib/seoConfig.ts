@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { BRAND, CONTACT, SITE_URL } from './siteConfig';
+import { BRAND, CONTACT, SITE_URL, SOCIAL } from './siteConfig';
 
 /** Appended to every document title via root `title.template`. */
 export const PAGE_TITLE_TEMPLATE = `%s | ${BRAND.name}`;
@@ -118,8 +118,64 @@ export const buildOrganizationSchema = () => ({
   logo: `${SITE_URL}${BRAND.logoPath}`,
   email: CONTACT.email,
   telephone: CONTACT.phone,
-  sameAs: [
-    'https://www.facebook.com/profile.php?id=61588416327126',
-    'https://www.instagram.com/elrix_energy/',
-  ],
+  sameAs: [SOCIAL.facebook, SOCIAL.instagram],
 });
+
+export function buildBreadcrumbSchema(
+  items: Array<{ name: string; path: string }>,
+) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: buildCanonical(item.path),
+    })),
+  };
+}
+
+export function buildFaqPageSchema(
+  faqs: Array<{ q: string; a: string }>,
+) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.a,
+      },
+    })),
+  };
+}
+
+export function buildItemListSchema(options: {
+  name: string;
+  items: Array<{ name: string; description: string }>;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: options.name,
+    itemListElement: options.items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      description: item.description,
+    })),
+  };
+}
+
+export function routeOgImage(path: string, alt: string) {
+  const normalized = path.startsWith('/') ? path : `/${path}`;
+  return {
+    url: `${normalized}/opengraph-image`,
+    width: 1200,
+    height: 630,
+    alt,
+  };
+}

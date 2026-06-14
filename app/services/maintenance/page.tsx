@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CheckSquare, Wrench, Monitor, Droplets, ArrowRight } from "lucide-react";
 import { PUBLIC_ASSETS, SITE_URL } from "../../lib/siteConfig";
-import { buildCanonical, buildPageMetadata } from "../../lib/seoConfig";
+import { buildCanonical, buildPageMetadata, routeOgImage } from "../../lib/seoConfig";
 import { buildServiceSchema } from "../../lib/citySchema";
 import { FinalCta } from "../../components/sections";
 import ContentImage from "../../components/common/ContentImage";
@@ -12,6 +12,7 @@ export const metadata: Metadata = buildPageMetadata({
   description:
     "Solar panel cleaning, inverter checks and AMC packages in Nellore, Tirupati, Kadapa and Ongole. 24/7 monitoring and performance guarantees.",
   path: "/services/maintenance",
+  images: [routeOgImage("/services/maintenance", "Solar Maintenance & AMC | ELRIX ENERGY")],
 });
 
 const serviceSchema = buildServiceSchema({

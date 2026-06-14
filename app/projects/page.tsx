@@ -1,15 +1,40 @@
 import type { Metadata } from "next";
 import Projects from "../components/views/Projects";
-import { buildPageMetadata } from "../lib/seoConfig";
+import { projectCaseStudies } from "../data/projectsData";
+import { BRAND } from "../lib/siteConfig";
+import { buildBreadcrumbSchema, buildItemListSchema, buildPageMetadata, routeOgImage } from "../lib/seoConfig";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Solar Projects Portfolio",
   description:
-    "Preview ELRIX ENERGY solar project layouts across Nellore, Tirupati, Kadapa and Ongole. Final case studies publishing soon.",
+    "On-grid rooftop solar installations by ELRIX ENERGY in Nellore and Tirupati — residential and industrial projects across Andhra Pradesh.",
   path: "/projects",
-  robots: { index: false, follow: false },
+  ogTitle: `Solar Projects | ${BRAND.name}`,
+  images: [routeOgImage("/projects", "Solar Projects Portfolio | ELRIX ENERGY")],
 });
 
+const structuredData = [
+  buildBreadcrumbSchema([
+    { name: "Home", path: "/" },
+    { name: "Projects", path: "/projects" },
+  ]),
+  buildItemListSchema({
+    name: `${BRAND.name} Solar Projects`,
+    items: projectCaseStudies.map((project) => ({
+      name: project.title,
+      description: project.summary,
+    })),
+  }),
+];
+
 export default function ProjectsPage() {
-  return <Projects />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      <Projects />
+    </>
+  );
 }

@@ -4,7 +4,7 @@
  */
 
 import {
-  COST_PER_KW_INR,
+  estimateCustomerPrice,
   calculatePmSuryaGharSubsidy,
 } from "@/app/data/pricingData";
 
@@ -32,7 +32,7 @@ export function calculateSolarSavings(monthlyBill: number): SolarCalcResult | nu
   const requiredKw = kwSize.toFixed(1);
   const lifetimeSavings = monthlyBill * 12 * LIFETIME_YEARS;
 
-  const grossCost = kwSize * COST_PER_KW_INR;
+  const grossCost = estimateCustomerPrice(kwSize);
   const subsidy = calculatePmSuryaGharSubsidy(kwSize);
   const netCost = Math.max(0, grossCost - subsidy);
 

@@ -185,11 +185,58 @@
   gap: var(--space-4);
 }
 
+.trust-strip__list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4) var(--space-6);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.trust-strip__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.trust-strip__value {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+  line-height: 1.1;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
+
+.trust-strip__label {
+  font-size: var(--text-xs);
+  font-weight: 500;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 14ch;
+}
+
+@media (max-width: 768px) {
+  .trust-strip__list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-5) var(--space-4);
+  }
+
+  .trust-strip__label {
+    max-width: none;
+  }
+}
+
+/* Legacy badge layout — kept for any one-off overrides */
 .trust-strip__item {
   flex: 0 1 auto;
 }
 
-/* On the dark navy trust strip, badge--brand colours must be light */
 .trust-strip .ui-badge--brand {
   background: rgba(255, 255, 255, 0.12);
   color: var(--white);

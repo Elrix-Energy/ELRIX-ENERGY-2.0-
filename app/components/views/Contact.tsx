@@ -1,11 +1,12 @@
 "use client";
-import React, { useState, Suspense } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { MapPin, Phone, Mail, ExternalLink } from 'lucide-react';
 import Reveal from '../common/Reveal';
 import LazyGoogleMap from '../common/LazyGoogleMap';
 import { trackFormSubmit } from '@/app/lib/analytics';
-import { CONTACT, FORM_SUBMIT } from '@/app/lib/siteConfig';
+import { getRecaptchaToken, isRecaptchaEnabled, loadRecaptchaScript } from '@/app/lib/recaptchaClient';
+import { CONTACT } from '@/app/lib/siteConfig';
 import styles from './Contact.module.css';
 
 type SubmitStatus = 'success' | 'error' | null;
@@ -33,6 +34,14 @@ const ContactForm = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>(null);
+
+  useEffect(() => {
+    if (isRecaptchaEnabled()) {
+      loadRecaptchaScript().catch(() => {
+        // Script load failure handled on submit.
+      });
+    }
+  }, []);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -66,19 +75,35 @@ const ContactForm = () => {
       return;
     }
 
-    formData.delete("_honey");
-    formData.append("_captcha", "false");
-    formData.append("_template", "table");
-    formData.append(
-      "_subject",
-      `New Solar Inquiry from ${name} — ${location}${leadSource ? ` (${leadSource})` : ""}`,
-    );
+    let recaptchaToken: string | null = null;
+    if (isRecaptchaEnabled()) {
+      try {
+        recaptchaToken = await getRecaptchaToken("contact");
+      } catch {
+        setSubmitStatus("error");
+        setIsSubmitting(false);
+        return;
+      }
+    }
+
+    const monthlyBill = String(formData.get("monthlyBill") ?? "").trim();
 
     try {
-      const response = await fetch(FORM_SUBMIT.ajaxUrl, {
+      const response = await fetch("/api/contact", {
         method: "POST",
-        headers: { Accept: "application/json" },
-        body: formData,
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          recaptchaToken,
+          honey: honeypot,
+          name,
+          phone,
+          location,
+          requirement,
+          monthlyBill,
+          leadSource,
+          systemSize,
+          lifetimeSavings,
+        }),
       });
 
       if (!response.ok) {
@@ -213,6 +238,20 @@ const ContactForm = () => {
                   <button type="submit" className={`btn btn-primary ${styles.w100}`} disabled={isSubmitting}>
                     {isSubmitting ? 'Sending…' : 'Send Inquiry'}
                   </button>
+
+                  {isRecaptchaEnabled() ? (
+                    <p className={styles.recaptchaNotice}>
+                      This site is protected by reCAPTCHA and the Google{' '}
+                      <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">
+                        Privacy Policy
+                      </a>{' '}
+                      and{' '}
+                      <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer">
+                        Terms of Service
+                      </a>{' '}
+                      apply.
+                    </p>
+                  ) : null}
 
                   <div role="status" aria-live="polite" aria-atomic="true">
                     {submitStatus === 'success' && (

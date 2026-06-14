@@ -162,6 +162,12 @@
   opacity: 0.5;
 }
 
+.footer-credit__link {
+  color: inherit;
+  font-weight: 700;
+  text-decoration: none;
+}
+
 /* ----------------------------------------------------------
    Certification badge slots
 ---------------------------------------------------------- */

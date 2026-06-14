@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { projectCaseStudies } from "@/app/data/projectsData";
+import { FinalCta } from "../sections";
 import styles from "./Projects.module.css";
 
 const Projects = () => {
@@ -11,37 +12,28 @@ const Projects = () => {
         <div className="container">
           <h1>Our Projects</h1>
           <p>
-            Sample case-study layouts for residential, commercial, industrial, and O&amp;M work
-            across Nellore, Tirupati, Kadapa, and Ongole.
+            On-grid residential and industrial solar installations delivered across Nellore and
+            Tirupati by ELRIX ENERGY&apos;s MNRE-certified EPC teams.
           </p>
         </div>
       </header>
 
       <section className="section bg-white">
         <div className="container">
-          <div className={styles.notice} role="status">
-            <p>
-              <strong>Placeholder portfolio.</strong> Final project photos, client names, and
-              generation data will be published after content sign-off. This page stays{" "}
-              <code>noindex</code> until then.
-            </p>
-          </div>
-
           <div className={styles.grid}>
             {projectCaseStudies.map((project) => (
               <article key={project.id} className={styles.card}>
-                <div className={styles.cardMedia}>
-                  <Image
-                    src={project.image}
-                    alt=""
-                    fill
-                    sizes="(max-width: 768px) 100vw, 360px"
-                    className={styles.cardImage}
-                  />
-                  {project.isPlaceholder ? (
-                    <span className={styles.cardBadge}>Case study coming soon</span>
-                  ) : null}
-                </div>
+                {project.image ? (
+                  <div className={styles.cardMedia}>
+                    <Image
+                      src={project.image}
+                      alt={`${project.title} — ${project.segment} solar installation`}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 360px"
+                      className={styles.cardImage}
+                    />
+                  </div>
+                ) : null}
                 <div className={styles.cardBody}>
                   <div className={styles.cardMeta}>
                     <span>{project.segment}</span>
@@ -61,6 +53,15 @@ const Projects = () => {
           </div>
         </div>
       </section>
+
+      <FinalCta
+        title="Plan your next installation"
+        description="Share your roof details and monthly bill — our Nellore team will recommend the right system size and subsidy path."
+        primaryHref="/contact"
+        primaryLabel="Get a Free Quote"
+        secondaryHref="/#calculator"
+        secondaryLabel="Try Solar Calculator"
+      />
     </div>
   );
 };
