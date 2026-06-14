@@ -5,6 +5,7 @@ import { MapPin, Phone, Mail, ExternalLink } from 'lucide-react';
 import Reveal from '../common/Reveal';
 import LazyGoogleMap from '../common/LazyGoogleMap';
 import { trackFormSubmit } from '@/app/lib/analytics';
+import { isValidIndianMobile, normalizeIndianMobile } from '@/app/lib/contactForm';
 import { getRecaptchaToken, isRecaptchaEnabled, loadRecaptchaScript } from '@/app/lib/recaptchaClient';
 import { CONTACT } from '@/app/lib/siteConfig';
 import styles from './Contact.module.css';
@@ -34,6 +35,7 @@ const ContactForm = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   useEffect(() => {
     if (isRecaptchaEnabled()) {
@@ -47,6 +49,7 @@ const ContactForm = () => {
     event.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus(null);
+    setSubmitError(null);
 
     const form = event.currentTarget;
     const formData = new FormData(form);
@@ -59,17 +62,19 @@ const ContactForm = () => {
     }
 
     const name = String(formData.get("name") ?? "").trim();
-    const phone = String(formData.get("phone") ?? "").trim().replace(/\s+/g, "");
+    const phone = normalizeIndianMobile(String(formData.get("phone") ?? ""));
     const location = String(formData.get("location") ?? "").trim();
     const requirement = String(formData.get("requirement") ?? "").trim();
 
     if (!name || !phone || !requirement || !location) {
+      setSubmitError("Please fill in all required fields.");
       setSubmitStatus("error");
       setIsSubmitting(false);
       return;
     }
 
-    if (!/^[6-9][0-9]{9}$/.test(phone)) {
+    if (!isValidIndianMobile(phone)) {
+      setSubmitError("Enter a valid 10-digit mobile number (e.g. 9640484677, without +91).");
       setSubmitStatus("error");
       setIsSubmitting(false);
       return;
@@ -80,6 +85,9 @@ const ContactForm = () => {
       try {
         recaptchaToken = await getRecaptchaToken("contact");
       } catch {
+        setSubmitError(
+          "Security check failed to load. Disable ad blockers, refresh the page, and try again.",
+        );
         setSubmitStatus("error");
         setIsSubmitting(false);
         return;
@@ -106,14 +114,21 @@ const ContactForm = () => {
         }),
       });
 
+      const data = (await response.json().catch(() => null)) as { error?: string } | null;
+
       if (!response.ok) {
-        throw new Error("Submission failed");
+        throw new Error(data?.error || "Submission failed");
       }
 
       setSubmitStatus("success");
       trackFormSubmit("contact", true);
       form.reset();
-    } catch {
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error && error.message !== "Submission failed"
+          ? error.message
+          : "Something went wrong. Please try again or call us directly.",
+      );
       setSubmitStatus("error");
       trackFormSubmit("contact", false);
     } finally {
@@ -190,10 +205,11 @@ const ContactForm = () => {
                       id="phone"
                       name="phone"
                       required
-                      placeholder="+91 98765 43210"
+                      placeholder="9640484677"
                       autoComplete="tel"
-                      pattern="[6-9][0-9]{9}"
-                      title="Enter a valid 10-digit Indian mobile number"
+                      inputMode="numeric"
+                      pattern="[0-9+\s]{10,14}"
+                      title="Enter a 10-digit Indian mobile number, with or without +91"
                     />
                   </div>
 
@@ -261,8 +277,19 @@ const ContactForm = () => {
                     )}
                     {submitStatus === 'error' && (
                       <p className={`${styles.formMessage} ${styles.formMessageError}`}>
-                        Something went wrong. Please try again or call us at{' '}
-                        <a href={`tel:${CONTACT.phone}`}>{CONTACT.phoneDisplay}</a>.
+                        {submitError ?? (
+                          <>
+                            Something went wrong. Please try again or call us at{' '}
+                            <a href={`tel:${CONTACT.phone}`}>{CONTACT.phoneDisplay}</a>.
+                          </>
+                        )}
+                        {submitError ? (
+                          <>
+                            {' '}
+                            Or call us at{' '}
+                            <a href={`tel:${CONTACT.phone}`}>{CONTACT.phoneDisplay}</a>.
+                          </>
+                        ) : null}
                       </p>
                     )}
                   </div>

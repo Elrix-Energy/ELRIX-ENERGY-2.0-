@@ -1,6 +1,12 @@
 import { NextResponse } from "next/server";
-import { FORM_SUBMIT } from "@/app/lib/siteConfig";
+import {
+  isValidIndianMobile,
+  normalizeIndianMobile,
+  submitInquiryToFormSubmit,
+} from "@/app/lib/contactForm";
 import { isRecaptchaConfigured, verifyRecaptchaToken } from "@/app/lib/recaptcha";
+
+export const runtime = "nodejs";
 
 const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000;
 const RATE_LIMIT_MAX = 5;
@@ -71,14 +77,14 @@ export async function POST(request: Request) {
     const captchaValid = await verifyRecaptchaToken(body.recaptchaToken, "contact");
     if (!captchaValid) {
       return NextResponse.json(
-        { error: "Captcha verification failed. Please try again." },
+        { error: "Captcha verification failed. Please refresh and try again." },
         { status: 403 },
       );
     }
   }
 
   const name = body.name?.trim() ?? "";
-  const phone = body.phone?.trim().replace(/\s+/g, "") ?? "";
+  const phone = normalizeIndianMobile(body.phone ?? "");
   const location = body.location?.trim() ?? "";
   const requirement = body.requirement?.trim() ?? "";
   const monthlyBill = body.monthlyBill?.trim() ?? "";
@@ -90,46 +96,27 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Please fill in all required fields." }, { status: 400 });
   }
 
-  if (!/^[6-9][0-9]{9}$/.test(phone)) {
-    return NextResponse.json({ error: "Enter a valid 10-digit Indian mobile number." }, { status: 400 });
-  }
-
-  const formData = new FormData();
-  formData.append("name", name);
-  formData.append("phone", phone);
-  formData.append("location", location);
-  formData.append("requirement", requirement);
-  if (monthlyBill) formData.append("monthlyBill", monthlyBill);
-  if (leadSource) formData.append("leadSource", leadSource);
-  if (systemSize) formData.append("systemSize", systemSize);
-  if (lifetimeSavings) formData.append("lifetimeSavings", lifetimeSavings);
-
-  formData.append("_captcha", "false");
-  formData.append("_template", "table");
-  formData.append(
-    "_subject",
-    `New Solar Inquiry from ${name} — ${location}${leadSource ? ` (${leadSource})` : ""}`,
-  );
-
-  try {
-    const response = await fetch(FORM_SUBMIT.ajaxUrl, {
-      method: "POST",
-      headers: { Accept: "application/json" },
-      body: formData,
-    });
-
-    if (!response.ok) {
-      return NextResponse.json(
-        { error: "Unable to send your inquiry. Please call us directly." },
-        { status: 502 },
-      );
-    }
-
-    return NextResponse.json({ ok: true });
-  } catch {
+  if (!isValidIndianMobile(phone)) {
     return NextResponse.json(
-      { error: "Unable to send your inquiry. Please call us directly." },
-      { status: 502 },
+      { error: "Enter a valid 10-digit Indian mobile number (without +91)." },
+      { status: 400 },
     );
   }
+
+  const result = await submitInquiryToFormSubmit({
+    name,
+    phone,
+    location,
+    requirement,
+    monthlyBill,
+    leadSource,
+    systemSize,
+    lifetimeSavings,
+  });
+
+  if (!result.ok) {
+    return NextResponse.json({ error: result.error }, { status: 502 });
+  }
+
+  return NextResponse.json({ ok: true });
 }
