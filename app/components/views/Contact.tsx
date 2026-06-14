@@ -5,7 +5,7 @@ import { MapPin, Phone, Mail, ExternalLink } from 'lucide-react';
 import Reveal from '../common/Reveal';
 import LazyGoogleMap from '../common/LazyGoogleMap';
 import { trackFormSubmit } from '@/app/lib/analytics';
-import { isValidIndianMobile, normalizeIndianMobile } from '@/app/lib/contactForm';
+import { isValidIndianMobile, normalizeIndianMobile, submitInquiryToFormSubmit } from '@/app/lib/contactForm';
 import { getRecaptchaToken, isRecaptchaEnabled, loadRecaptchaScript } from '@/app/lib/recaptchaClient';
 import { CONTACT } from '@/app/lib/siteConfig';
 import styles from './Contact.module.css';
@@ -120,15 +120,30 @@ const ContactForm = () => {
         throw new Error(data?.error || "Submission failed");
       }
 
+      const delivery = await submitInquiryToFormSubmit({
+        name,
+        phone,
+        location,
+        requirement,
+        monthlyBill,
+        leadSource,
+        systemSize,
+        lifetimeSavings,
+      });
+
+      if (!delivery.ok) {
+        throw new Error(delivery.error);
+      }
+
       setSubmitStatus("success");
       trackFormSubmit("contact", true);
       form.reset();
     } catch (error) {
-      setSubmitError(
+      const message =
         error instanceof Error && error.message !== "Submission failed"
           ? error.message
-          : "Something went wrong. Please try again or call us directly.",
-      );
+          : "Something went wrong. Please try again or call us directly.";
+      setSubmitError(message);
       setSubmitStatus("error");
       trackFormSubmit("contact", false);
     } finally {
@@ -277,19 +292,9 @@ const ContactForm = () => {
                     )}
                     {submitStatus === 'error' && (
                       <p className={`${styles.formMessage} ${styles.formMessageError}`}>
-                        {submitError ?? (
-                          <>
-                            Something went wrong. Please try again or call us at{' '}
-                            <a href={`tel:${CONTACT.phone}`}>{CONTACT.phoneDisplay}</a>.
-                          </>
-                        )}
-                        {submitError ? (
-                          <>
-                            {' '}
-                            Or call us at{' '}
-                            <a href={`tel:${CONTACT.phone}`}>{CONTACT.phoneDisplay}</a>.
-                          </>
-                        ) : null}
+                        {submitError ?? 'Something went wrong. Please try again.'}{' '}
+                        Call us at{' '}
+                        <a href={`tel:${CONTACT.phone}`}>{CONTACT.phoneDisplay}</a>.
                       </p>
                     )}
                   </div>

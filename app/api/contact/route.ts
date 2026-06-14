@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import {
   isValidIndianMobile,
   normalizeIndianMobile,
-  submitInquiryToFormSubmit,
 } from "@/app/lib/contactForm";
 import { isRecaptchaConfigured, verifyRecaptchaToken } from "@/app/lib/recaptcha";
 
@@ -49,6 +48,7 @@ function isRateLimited(ip: string): boolean {
   return false;
 }
 
+/** Verify spam protection + field validation. Email delivery happens in the browser via FormSubmit. */
 export async function POST(request: Request) {
   const ip = getClientIp(request);
   if (isRateLimited(ip)) {
@@ -87,10 +87,6 @@ export async function POST(request: Request) {
   const phone = normalizeIndianMobile(body.phone ?? "");
   const location = body.location?.trim() ?? "";
   const requirement = body.requirement?.trim() ?? "";
-  const monthlyBill = body.monthlyBill?.trim() ?? "";
-  const leadSource = body.leadSource?.trim() ?? "";
-  const systemSize = body.systemSize?.trim() ?? "";
-  const lifetimeSavings = body.lifetimeSavings?.trim() ?? "";
 
   if (!name || !phone || !location || !requirement) {
     return NextResponse.json({ error: "Please fill in all required fields." }, { status: 400 });
@@ -101,21 +97,6 @@ export async function POST(request: Request) {
       { error: "Enter a valid 10-digit Indian mobile number (without +91)." },
       { status: 400 },
     );
-  }
-
-  const result = await submitInquiryToFormSubmit({
-    name,
-    phone,
-    location,
-    requirement,
-    monthlyBill,
-    leadSource,
-    systemSize,
-    lifetimeSavings,
-  });
-
-  if (!result.ok) {
-    return NextResponse.json({ error: result.error }, { status: 502 });
   }
 
   return NextResponse.json({ ok: true });

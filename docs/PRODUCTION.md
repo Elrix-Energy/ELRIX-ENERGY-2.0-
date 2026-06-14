@@ -20,7 +20,7 @@ Copy `.env.example` to `.env.local` (local) and configure in Vercel (production)
 
 ## Contact form (FormSubmit + reCAPTCHA v3)
 
-Inquiries post to `/api/contact`, which verifies **Google reCAPTCHA v3**, applies rate limiting, then forwards to [FormSubmit](https://formsubmit.co) → `elrixenergy@gmail.com`.
+Inquiries are verified by `/api/contact` (reCAPTCHA v3 + rate limiting), then delivered from the browser via [FormSubmit](https://formsubmit.co) → `elrixenergy@gmail.com`.
 
 **Required in production:**
 
